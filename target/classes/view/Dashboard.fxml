@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.flashcard.controller.DashboardController"
+            styleClass="root"
+            stylesheets="@style.css">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="top-bar">
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
+
+            <Label fx:id="welcomeLabel" text="Xin chào!" styleClass="welcome-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="logoutButton" text="Đăng xuất" onAction="#handleLogout" styleClass="logout-button"/>
+        </HBox>
+    </top>
+
+    <!-- Main Content -->
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="tab-pane">
+            <!-- Manage Flashcards Tab -->
+            <Tab text="Quản lý Flashcards">
+                <VBox spacing="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <!-- Input Form -->
+                    <VBox spacing="10" styleClass="form-container">
+                        <Label text="Thêm / Sửa Flashcard" styleClass="section-title"/>
+
+                        <HBox spacing="15">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Từ vựng:" styleClass="field-label"/>
+                                <TextField fx:id="vocabField" promptText="Nhập từ vựng" styleClass="text-field"/>
+                            </VBox>
+
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Nghĩa:" styleClass="field-label"/>
+                                <TextField fx:id="defField" promptText="Nhập nghĩa" styleClass="text-field"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox spacing="10">
+                            <Button fx:id="addButton" text="Thêm" onAction="#handleAdd" styleClass="primary-button"/>
+                            <Button fx:id="updateButton" text="Sửa" onAction="#handleUpdate" styleClass="warning-button"/>
+                            <Button fx:id="deleteButton" text="Xóa" onAction="#handleDelete" styleClass="danger-button"/>
+                            <Button fx:id="markLearnedButton" text="Đánh dấu đã thuộc" onAction="#handleMarkLearned" styleClass="success-button"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Table -->
+                    <VBox spacing="10" VBox.vgrow="ALWAYS">
+                        <Label text="Danh sách Flashcards" styleClass="section-title"/>
+
+                        <TableView fx:id="flashcardTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+                            <columns>
+                                <TableColumn fx:id="vocabularyColumn" text="Từ vựng" prefWidth="250"/>
+                                <TableColumn fx:id="definitionColumn" text="Nghĩa" prefWidth="300"/>
+                                <TableColumn fx:id="learnedColumn" text="Đã thuộc" prefWidth="100"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </VBox>
+            </Tab>
+
+            <!-- Review Mode Tab -->
+            <Tab text="Chế độ ôn tập">
+                <VBox spacing="20" alignment="CENTER">
+                    <padding>
+                        <Insets top="40" right="40" bottom="40" left="40"/>
+                    </padding>
+
+                    <Label text="CHẾ ĐỘ ÔN TẬP" styleClass="title-label"/>
+
+                    <!-- Review Card Display -->
+                    <VBox spacing="15" alignment="CENTER" styleClass="review-container">
+                        <Label fx:id="reviewDefinitionLabel"
+                               text="Nghĩa sẽ hiển thị ở đây"
+                               styleClass="review-definition"
+                               wrapText="true"
+                               maxWidth="500"/>
+
+                        <VBox spacing="10" alignment="CENTER" maxWidth="400">
+                            <Label text="Nhập từ vựng (tiếng Anh):" styleClass="field-label"/>
+                            <TextField fx:id="reviewAnswerField"
+                                       promptText="Nhập câu trả lời của bạn"
+                                       styleClass="text-field"
+                                       prefWidth="400"/>
+                        </VBox>
+
+                        <HBox spacing="15" alignment="CENTER">
+                            <Button fx:id="submitAnswerButton"
+                                    text="Kiểm tra"
+                                    onAction="#handleSubmitAnswer"
+                                    styleClass="primary-button"/>
+                            <Button fx:id="nextCardButton"
+                                    text="Thẻ tiếp theo"
+                                    onAction="#handleNextCard"
+                                    styleClass="secondary-button"/>
+                        </HBox>
+
+                        <Label fx:id="reviewResultLabel"
+                               text=""
+                               wrapText="true"
+                               maxWidth="500"/>
+                    </VBox>
+
+                    <!-- Statistics -->
+                    <Label fx:id="reviewStatsLabel"
+                           text="Thống kê: 0/0 đúng (0%) | Còn lại: 0 thẻ"
+                           styleClass="stats-label"/>
+                </VBox>
+            </Tab>
+
+            <!-- Study Timer Tab -->
+            <Tab text="Đồng hồ học tập">
+                <VBox spacing="25" alignment="CENTER">
+                    <padding>
+                        <Insets top="50" right="50" bottom="50" left="50"/>
+                    </padding>
+
+                    <Label text="ĐỒNG HỒ HỌC TẬP" styleClass="title-label"/>
+
+                    <VBox spacing="15" alignment="CENTER" styleClass="timer-container">
+                        <Label text="Đặt mục tiêu học tập:" styleClass="section-title"/>
+
+                        <HBox spacing="10" alignment="CENTER">
+                            <TextField fx:id="timerMinutesField"
+                                       promptText="Số phút"
+                                       styleClass="text-field"
+                                       prefWidth="150"/>
+                            <Label text="phút" styleClass="field-label"/>
+                        </HBox>
+
+                        <!-- Timer Display -->
+                        <Label fx:id="timerDisplayLabel"
+                               text="00:00"
+                               styleClass="timer-display"/>
+
+                        <HBox spacing="15" alignment="CENTER">
+                            <Button fx:id="startTimerButton"
+                                    text="Bắt đầu"
+                                    onAction="#handleStartTimer"
+                                    styleClass="primary-button"/>
+                            <Button fx:id="stopTimerButton"
+                                    text="Dừng"
+                                    onAction="#handleStopTimer"
+                                    styleClass="danger-button"
+                                    disable="true"/>
+                        </HBox>
+
+                        <Label text="💡 Đặt thời gian học và nhấn 'Bắt đầu' để bắt đầu đếm ngược!"
+                               styleClass="hint-label"
+                               wrapText="true"
+                               maxWidth="400"/>
+                    </VBox>
+                </VBox>
+            </Tab>
+        </TabPane>
+    </center>
+</BorderPane>
+

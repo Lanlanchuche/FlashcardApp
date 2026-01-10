@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.flashcard.controller.LoginController"
+      alignment="CENTER"
+      spacing="20"
+      styleClass="root"
+      stylesheets="@style.css">
+
+    <padding>
+        <Insets top="50" right="50" bottom="50" left="50"/>
+    </padding>
+
+    <!-- Title -->
+    <Label text="FLASHCARD LEARNING" styleClass="title-label"/>
+    <Label text="Đăng nhập" styleClass="subtitle-label"/>
+
+    <!-- Login Form -->
+    <VBox spacing="15" alignment="CENTER" maxWidth="350">
+        <!-- Username -->
+        <VBox spacing="5">
+            <Label text="Tên đăng nhập:" styleClass="field-label"/>
+            <TextField fx:id="usernameField" promptText="Nhập tên đăng nhập" styleClass="text-field"/>
+        </VBox>
+
+        <!-- Password -->
+        <VBox spacing="5">
+            <Label text="Mật khẩu:" styleClass="field-label"/>
+            <PasswordField fx:id="passwordField" promptText="Nhập mật khẩu" styleClass="text-field"/>
+        </VBox>
+
+        <!-- Message Label -->
+        <Label fx:id="messageLabel" text="" styleClass="message-label" wrapText="true"/>
+
+        <!-- Buttons -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button fx:id="loginButton" text="Đăng nhập" onAction="#handleLogin" styleClass="primary-button"/>
+            <Button fx:id="registerButton" text="Đăng ký" onAction="#handleGoToRegister" styleClass="secondary-button"/>
+        </HBox>
+    </VBox>
+</VBox>
