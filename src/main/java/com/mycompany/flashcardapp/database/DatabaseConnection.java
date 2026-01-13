@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    private static final String DATABASE_URL = "jdbc:sqlite:flashcard.db";
+    private static final String DATABASE_URL = "jdbc:sqlite:flashcard.sqlite";
     private static DatabaseConnection instance;
     private Connection connection;
 

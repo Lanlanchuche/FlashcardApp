@@ -32,7 +32,7 @@ public class MyFlashcardApp extends Application {
             Parent root = loader.load();
 
             // Setup the scene
-            Scene scene = new Scene(root, 500, 600);
+            Scene scene = new Scene(root, 600, 400);
 
             // Configure the stage
             stage.setTitle("Flashcard Learning - Đăng nhập");

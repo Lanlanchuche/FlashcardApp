@@ -82,6 +82,20 @@ public class FlashcardDAO {
         }
         return flashcards;
     }
+
+    public boolean markAsLearned(int id, boolean isLearned) {
+        String sql = "UPDATE flashcards SET is_learned = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, isLearned ? 1 : 0);
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Failed to mark flashcard as learned!");
+            e.printStackTrace();
+            return false;
+        }
+    }
     public List<Flashcard> getUnlearnedFlashcards(int userId) {
         List<Flashcard> flashcards = new ArrayList<>();
         String sql = "SELECT * FROM flashcards WHERE user_id = ? AND is_learned = 0";

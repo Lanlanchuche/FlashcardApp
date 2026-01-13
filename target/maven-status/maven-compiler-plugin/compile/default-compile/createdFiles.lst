@@ -1,6 +1,7 @@
 com\mycompany\flashcardapp\constant\ErrorMessage.class
 com\mycompany\flashcardapp\database\UserDAO.class
 com\mycompany\flashcardapp\model\Flashcard.class
+com\mycompany\flashcardapp\controller\DashboardController.class
 com\mycompany\flashcardapp\controller\LoginController.class
 com\mycompany\flashcardapp\database\DatabaseConnection.class
 com\mycompany\flashcardapp\database\FlashcardDAO.class

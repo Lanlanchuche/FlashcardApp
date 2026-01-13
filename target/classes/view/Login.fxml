@@ -1,46 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.flashcard.controller.LoginController"
-      alignment="CENTER"
-      spacing="20"
-      styleClass="root"
-      stylesheets="@style.css">
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: #9ADBB3;"
+            styleClass="root"
+            stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mycompany.flashcardapp.controller.LoginController">
 
-    <padding>
-        <Insets top="50" right="50" bottom="50" left="50"/>
-    </padding>
+         <children>
+            <Label layoutX="150.0" layoutY="30.0" styleClass="title-label" text="FLASHCARD MAGIC">
+               <font>
+                  <Font name="System Bold" size="32.0" />
+               </font>
+            </Label>
 
-    <!-- Title -->
-    <Label text="FLASHCARD LEARNING" styleClass="title-label"/>
-    <Label text="Đăng nhập" styleClass="subtitle-label"/>
+            <VBox layoutX="150.0" layoutY="90.0" spacing="15.0">
+               <children>
+                  <Label text="Tên đăng nhập:" textFill="WHITE" />
+                  <TextField fx:id="usernameField" prefWidth="300.0" promptText="Tên đăng nhập của bạn ..." />
 
-    <!-- Login Form -->
-    <VBox spacing="15" alignment="CENTER" maxWidth="350">
-        <!-- Username -->
-        <VBox spacing="5">
-            <Label text="Tên đăng nhập:" styleClass="field-label"/>
-            <TextField fx:id="usernameField" promptText="Nhập tên đăng nhập" styleClass="text-field"/>
-        </VBox>
+                  <Label text="Mật khẩu:" textFill="WHITE" />
+                  <PasswordField fx:id="passwordField" prefWidth="300.0" promptText="Mật khẩu của bạn..." />
 
-        <!-- Password -->
-        <VBox spacing="5">
-            <Label text="Mật khẩu:" styleClass="field-label"/>
-            <PasswordField fx:id="passwordField" promptText="Nhập mật khẩu" styleClass="text-field"/>
-        </VBox>
+                  <Label fx:id="messageLabel" textFill="#ffeb3b" /> </children>
+            </VBox>
 
-        <!-- Message Label -->
-        <Label fx:id="messageLabel" text="" styleClass="message-label" wrapText="true"/>
-
-        <!-- Buttons -->
-        <HBox spacing="10" alignment="CENTER">
-            <Button fx:id="loginButton" text="Đăng nhập" onAction="#handleLogin" styleClass="primary-button"/>
-            <Button fx:id="registerButton" text="Đăng ký" onAction="#handleGoToRegister" styleClass="secondary-button"/>
-        </HBox>
-    </VBox>
-</VBox>
+            <Button fx:id="loginButton" layoutX="225.0" layoutY="280.0" onAction="#handleLogin"
+                    prefHeight="45.0" prefWidth="150.0" styleClass="primary-button" text="ĐĂNG NHẬP" />
+               <HBox alignment="CENTER" layoutX="150.0" layoutY="340.0" prefWidth="300.0" spacing="10.0">
+               <children>
+                  <Label text="Mới tham gia?" textFill="WHITE" />
+                  <Button onAction="#handleGoToRegister" styleClass="secondary-button" text="Đăng ký" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>

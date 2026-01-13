@@ -1,28 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url('@background/login.png'); -fx-background-color: #9ADBB3;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.flashcardapp.controller.LoginController">
-   <children>
-      <Button layoutX="252.0" layoutY="239.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-radius: 10; -fx-background-color: #FFB347;" stylesheets="@style.css" text="Đăng nhập" textFill="#60198c">
-         <font>
-            <Font name="Calibri" size="16.0" />
-         </font></Button>
-      <Button layoutX="268.0" layoutY="299.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Đăng kí" />
-      <Label layoutX="151.0" layoutY="80.0" text="Tên đăng nhập" textFill="#2c3e50">
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font></Label>
-      <TextField fx:id="username" layoutX="149.0" layoutY="110.0" prefHeight="35.0" prefWidth="282.0" style="-fx-background-radius: 15; -fx-border-radius: 15;" />
-      <Label layoutX="157.0" layoutY="148.0" text="Mật khẩu" textFill="#2c3e50">
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font></Label>
-      <TextField fx:id="password" layoutX="149.0" layoutY="174.0" prefHeight="35.0" prefWidth="282.0" style="-fx-background-radius: 15; -fx-border-radius: 15;" />
-      <Label layoutX="159.0" layoutY="304.0" text="Chưa có tài khoản" />
-   </children>
-</AnchorPane>
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: #9ADBB3;"
+            styleClass="root"
+            stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mycompany.flashcardapp.controller.LoginController">
+
+         <children>
+            <Label layoutX="150.0" layoutY="30.0" styleClass="title-label" text="FLASHCARD MAGIC">
+               <font>
+                  <Font name="System Bold" size="32.0" />
+               </font>
+            </Label>
+
+            <VBox layoutX="150.0" layoutY="90.0" spacing="15.0">
+               <children>
+                  <Label text="Tên đăng nhập:" textFill="WHITE" />
+                  <TextField fx:id="usernameField" prefWidth="300.0" promptText="Tên đăng nhập của bạn ..." />
+
+                  <Label text="Mật khẩu:" textFill="WHITE" />
+                  <PasswordField fx:id="passwordField" prefWidth="300.0" promptText="Mật khẩu của bạn..." />
+
+                  <Label fx:id="messageLabel" textFill="#ffeb3b" /> </children>
+            </VBox>
+
+            <Button fx:id="loginButton" layoutX="225.0" layoutY="280.0" onAction="#handleLogin"
+                    prefHeight="45.0" prefWidth="150.0" styleClass="primary-button" text="ĐĂNG NHẬP" />
+               <HBox alignment="CENTER" layoutX="150.0" layoutY="340.0" prefWidth="300.0" spacing="10.0">
+               <children>
+                  <Label text="Mới tham gia?" textFill="WHITE" />
+                  <Button onAction="#handleGoToRegister" styleClass="secondary-button" text="Đăng ký" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
