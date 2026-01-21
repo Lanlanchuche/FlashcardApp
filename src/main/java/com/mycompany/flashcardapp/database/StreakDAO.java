@@ -6,8 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class StreakDAO {
     private final Connection connection;
@@ -36,6 +36,8 @@ public class StreakDAO {
         }
         return null;
     }
+
+
     public boolean createDefaultStreak(int userId) {
         String sql = "INSERT INTO streaks (user_id, current_streak, longest_streak, last_completed_at, freeze_count) " +
                 "VALUES (?, 0, 0, NULL, 0)";
@@ -50,6 +52,7 @@ public class StreakDAO {
             return false;
         }
     }
+
 
     public boolean updateStreak(int userId) {
         Streak streak = getUserStreak(userId);
@@ -118,6 +121,12 @@ public class StreakDAO {
         return saveStreak(streak);
     }
 
+    /**
+     * LƯU THÔNG TIN STREAK VÀO DATABASE
+     *
+     * @param streak Streak object cần lưu
+     * @return true nếu lưu thành công, false nếu thất bại
+     */
     private boolean saveStreak(Streak streak) {
         String sql = "UPDATE streaks SET current_streak = ?, longest_streak = ?, last_completed_at = ?, freeze_count = ? "
                 +
