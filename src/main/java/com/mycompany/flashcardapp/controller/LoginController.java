@@ -16,8 +16,6 @@ import java.io.IOException;
 
 public class LoginController {
 
-    @FXML
-    private Button loginButton;
 
     @FXML
     private Label messageLabel;
@@ -28,8 +26,7 @@ public class LoginController {
     @FXML
     private TextField usernameField;
 
-    @FXML
-    private Button registerButton;
+
 
     @FXML
     void handleGoToRegister(ActionEvent event) {
@@ -46,49 +43,29 @@ public class LoginController {
         }
     }
 
-    private void navigateToDashboard() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/flashcard/view/Dashboard.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) loginButton.getScene().getWindow();
-            stage.setScene(new Scene(root, 1000, 700));
-            stage.setTitle("Flashcard Learning - Dashboard");
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Không thể mở màn hình chính!");
-        }
-    }
-
 
     @FXML
     void handleLogin(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        // 1. Khởi tạo UserDAO để truy vấn database
         UserDAO userDAO = new UserDAO();
 
-        // 2. Kiểm tra tài khoản
+        //Kiểm tra tài khoản
         com.mycompany.flashcardapp.model.User loggedInUser = userDAO.login(username, password);
 
         if (loggedInUser != null) {
             try {
-                // 3. Khởi tạo FXMLLoader
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Dashboard.fxml"));
-
-                // 4. Nạp giao diện (Dòng này tạo ra các đối tượng UI và DashboardController)
                 Parent dashboardRoot = loader.load();
 
-                // 5. LẤY CONTROLLER CỦA DASHBOARD VÀ TRUYỀN DỮ LIỆU
-                // Đây là bước quan trọng nhất để tránh lỗi NullPointerException
+                // LẤY CONTROLLER CỦA DASHBOARD VÀ TRUYỀN DỮ LIỆU
                 DashboardController dashboardController = loader.getController();
                 dashboardController.setUser(loggedInUser);
 
-                // 6. Hiển thị Stage mới
                 Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
-                // Tăng kích thước lên một chút (ví dụ 800x500) để bảng TableView hiển thị đẹp hơn
+                // Tăng kích thước, hiển thị đẹp hơn
                 Scene scene = new Scene(dashboardRoot, 800, 500);
                 stage.setScene(scene);
                 stage.setTitle("Flashcard Learning - Dashboard");
@@ -103,9 +80,6 @@ public class LoginController {
             messageLabel.setText("❌ Tên đăng nhập hoặc mật khẩu không đúng!");
         }
     }
-
-
-
 
     private void showError(String message) {
         if (messageLabel != null) {
