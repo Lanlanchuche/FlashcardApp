@@ -53,6 +53,7 @@ public class VocabularyManagementController {
 
 
     private boolean isValidInput() {
+        return false;
     }
 
     private void clearFields() {

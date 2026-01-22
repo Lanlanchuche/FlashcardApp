@@ -11,10 +11,18 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * Controller for the Registration screen
+ * Handles user registration, form validation, and navigation
+ */
 public class RegisterController {
 
+    // FXML Components
     @FXML
     private TextField usernameField;
+
+    @FXML
+    private TextField emailField;
 
     @FXML
     private PasswordField passwordField;
@@ -29,27 +37,34 @@ public class RegisterController {
     private Button backToLoginButton;
 
     @FXML
-    private Label messageLabel;
+    private Label registerErrorLabel;
 
+    // Database Access Object
     private final UserDAO userDAO = new UserDAO();
 
     /**
-     * Handle register button click
+     * Handle user registration
+     * Validates input and creates new user account
      */
     @FXML
     private void handleRegister() {
         String username = usernameField.getText().trim();
+        String email = emailField.getText().trim();
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
 
-        // Validation
-        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             showError("Vui lòng nhập đầy đủ thông tin!");
             return;
         }
 
         if (username.length() < 3) {
             showError("Tên đăng nhập phải có ít nhất 3 ký tự!");
+            return;
+        }
+
+        if (!email.contains("@") || !email.contains(".")) {
+            showError("Email không hợp lệ!");
             return;
         }
 
@@ -63,18 +78,14 @@ public class RegisterController {
             return;
         }
 
-        // Check if username already exists
         if (userDAO.isUsernameExists(username)) {
             showError("Tên đăng nhập đã tồn tại!");
             return;
         }
 
-        // Attempt registration
         boolean success = userDAO.register(username, password);
         if (success) {
             showSuccess("Đăng ký thành công! Đang chuyển đến trang đăng nhập...");
-
-            // Navigate back to login after 1.5 seconds
             new Thread(() -> {
                 try {
                     Thread.sleep(1500);
@@ -88,7 +99,6 @@ public class RegisterController {
         }
     }
 
-
     @FXML
     private void handleBackToLogin() {
         try {
@@ -96,27 +106,64 @@ public class RegisterController {
             Parent root = loader.load();
 
             Stage stage = (Stage) backToLoginButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            stage.setMaximized(false);
+            stage.setScene(new Scene(root, 1280, 720));
             stage.setTitle("Flashcard Learning - Đăng nhập");
+            stage.setMaximized(true);
+            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
             showError("Không thể quay lại màn hình đăng nhập!");
         }
     }
 
+    @FXML
+    void backToWelcome(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Welcome.fxml"));
+            Parent root = loader.load();
 
-    private void showError(String message) {
-        if (messageLabel != null) {
-            messageLabel.setText(message);
-            messageLabel.setStyle("-fx-text-fill: #e74c3c;");
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setMaximized(false);
+            stage.setScene(new Scene(root, 1280, 720));
+            stage.setTitle("Flashcard Learning - Welcome");
+            stage.setMaximized(true);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Không thể quay lại màn hình Welcome!");
         }
     }
 
+    @FXML
+    void goToLogin(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setMaximized(false);
+            stage.setScene(new Scene(root, 1280, 720));
+            stage.setTitle("Flashcard Learning - Đăng nhập");
+            stage.setMaximized(true);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Không thể mở màn hình đăng nhập!");
+        }
+    }
+
+    private void showError(String message) {
+        if (registerErrorLabel != null) {
+            registerErrorLabel.setText(message);
+            registerErrorLabel.setStyle("-fx-text-fill: #e74c3c;");
+        }
+    }
 
     private void showSuccess(String message) {
-        if (messageLabel != null) {
-            messageLabel.setText(message);
-            messageLabel.setStyle("-fx-text-fill: #27ae60;");
+        if (registerErrorLabel != null) {
+            registerErrorLabel.setText(message);
+            registerErrorLabel.setStyle("-fx-text-fill: #27ae60;");
         }
     }
 }

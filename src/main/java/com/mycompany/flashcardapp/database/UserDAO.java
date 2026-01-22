@@ -15,7 +15,6 @@ public class UserDAO {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
-    // Hàm này để lúc đăng kí k bị trùng username
     public boolean isUsernameExists(String username) {
         String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
