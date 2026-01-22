@@ -1,9 +1,11 @@
 package com.mycompany.flashcardapp.controller;
 
 import com.mycompany.flashcardapp.database.UserDAO;
+import com.mycompany.flashcardapp.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,10 +17,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
-
-
     @FXML
-    private Label messageLabel;
+    private Label loginErrorLabel;
 
     @FXML
     private PasswordField passwordField;
@@ -26,66 +26,95 @@ public class LoginController {
     @FXML
     private TextField usernameField;
 
+    private final UserDAO userDAO = new UserDAO();
 
 
     @FXML
-    void handleGoToRegister(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Register.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Flashcard Learning - Đăng ký");
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Không thể mở màn hình đăng ký!");
-        }
-    }
-
-
-    @FXML
-    void handleLogin(ActionEvent event) {
+    private void handleLogin(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        UserDAO userDAO = new UserDAO();
+        if(username.isEmpty() || password.isEmpty()){
+            showError("Tên đăng nhập và mật khẩu không được để trống");
+            return;
+        }
 
-        //Kiểm tra tài khoản
-        com.mycompany.flashcardapp.model.User loggedInUser = userDAO.login(username, password);
-
-        if (loggedInUser != null) {
+        User user = userDAO.login(username, password);
+        if(user != null){
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Dashboard.fxml"));
-                Parent dashboardRoot = loader.load();
+                // Load MainMenu
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
+                Parent root = loader.load();
 
-                // LẤY CONTROLLER CỦA DASHBOARD VÀ TRUYỀN DỮ LIỆU
-                DashboardController dashboardController = loader.getController();
-                dashboardController.setUser(loggedInUser);
+                // Get controller and pass user data
+                MainMenuController controller = loader.getController();
+                controller.setUser(user);
 
-                Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-                // Tăng kích thước, hiển thị đẹp hơn
-                Scene scene = new Scene(dashboardRoot, 800, 500);
-                stage.setScene(scene);
-                stage.setTitle("Flashcard Learning - Dashboard");
-                stage.centerOnScreen();
+                // Navigate to MainMenu
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setMaximized(false);
+                stage.setScene(new Scene(root, 1280, 720));
+                stage.setTitle("Flashcard Learning - Menu Chính");
+                stage.setMaximized(true);
                 stage.show();
-
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-                messageLabel.setText("❌ Lỗi: Không thể nạp giao diện Dashboard!");
+                showError("Không thể mở màn hình menu chính!");
             }
-        } else {
-            messageLabel.setText("❌ Tên đăng nhập hoặc mật khẩu không đúng!");
+
+        }
+        else{
+            showError("Tên đăng nhập hoặc mật khẩu không chính xác");
+        }
+
+    }
+    @FXML
+    void backToWelcome(ActionEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Welcome.fxml"));
+            Parent root = loader.load();
+
+            Stage stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setMaximized(true);
+            stage.setTitle("Flashcard Learning - Welcome");
+            stage.show();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+            showError("Không thể trở về giao diện Welcome");
+        }
+
+    }
+
+
+     private void showError(String message) {
+        if(message != null) {
+            loginErrorLabel.setText(message);
+            loginErrorLabel.setStyle("-fx-text-fill:  #e74c3c;");
         }
     }
 
-    private void showError(String message) {
-        if (messageLabel != null) {
-            messageLabel.setText(message);
-            messageLabel.setStyle("-fx-text-fill: #e74c3c;");
+    @FXML
+    void goToRegister(ActionEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Register.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Flashcard Learning - Đăng ký");
+            stage.show();
         }
+        catch (Exception e) {
+            e.printStackTrace();
+            showError("Không thể mở màn hình đăng ký!");
+        }
+
+    }
+
+    @FXML
+    void handleForgotPassword(ActionEvent event){
+
     }
 
 }
