@@ -1,88 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.mycompany.flashcardapp.controller.MainMenuController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="720" prefWidth="1280"
+            style="-fx-background-color: #f0f2f5;">
+
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #2c3e50; -fx-padding: 15;">
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #2c3e50;">
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
             <children>
-                <Label fx:id="welcomeLabel" text="Xin chào!" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 18;" />
+                <Label fx:id="welcomeLabel" text="Xin chào!" textFill="WHITE"
+                       style="-fx-font-weight: bold; -fx-font-size: 20;" />
                 <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="logoutButton" onAction="#handleLogout" styleClass="logout-button" text="Đăng xuất" />
+                <Button fx:id="logoutButton" onAction="#handleLogout"
+                        text="Đăng xuất"
+                        style="-fx-background-color: transparent; -fx-text-fill: white;
+                               -fx-border-color: white; -fx-border-radius: 8; -fx-background-radius: 8;
+                               -fx-padding: 10 20; -fx-font-size: 14; -fx-cursor: hand;" />
             </children>
         </HBox>
     </top>
 
     <center>
-        <VBox alignment="CENTER" spacing="40" style="-fx-padding: 40;">
+        <VBox alignment="CENTER" spacing="50">
+            <padding>
+                <Insets top="60" right="80" bottom="60" left="80"/>
+            </padding>
             <children>
-                <Label text="CHỌN TÁC VỤ" style="-fx-font-size: 32; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+                <Label text="CHỌN TÁC VỤ"
+                       style="-fx-font-size: 36; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
 
                 <!-- Task Cards Grid -->
-                <GridPane hgap="20" vgap="20" alignment="CENTER">
+                <GridPane hgap="40" vgap="40" alignment="CENTER">
                     <columnConstraints>
-                        <ColumnConstraints minWidth="200" prefWidth="200" />
-                        <ColumnConstraints minWidth="200" prefWidth="200" />
+                        <ColumnConstraints minWidth="400" prefWidth="480" maxWidth="560" hgrow="ALWAYS" />
+                        <ColumnConstraints minWidth="400" prefWidth="480" maxWidth="560" hgrow="ALWAYS" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="150" prefHeight="150" />
-                        <RowConstraints minHeight="150" prefHeight="150" />
+                        <RowConstraints minHeight="200" prefHeight="220" maxHeight="260" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="200" prefHeight="220" maxHeight="260" vgrow="ALWAYS" />
                     </rowConstraints>
 
                     <!-- Card 1: Quản lý từ vựng -->
                     <VBox alignment="CENTER" spacing="15" onMouseClicked="#openVocabularyManagement"
-                          styleClass="task-card"
-                          style="-fx-background-color: linear-gradient(to bottom right, #667eea, #764ba2); -fx-background-radius: 15; -fx-padding: 20; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);"
+                          maxWidth="Infinity" maxHeight="Infinity"
+                          style="-fx-background-color: linear-gradient(to bottom right, #667eea, #764ba2);
+                                 -fx-background-radius: 20;
+                                 -fx-cursor: hand;
+                                 -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 5);"
                           GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <padding>
+                            <Insets top="30" right="30" bottom="30" left="30"/>
+                        </padding>
                         <children>
-                            <Label text="📚" style="-fx-font-size: 48;" />
-                            <Label text="Quản lý từ vựng" textFill="WHITE" style="-fx-font-size: 18; -fx-font-weight: bold;" />
-                            <Label text="Thêm, sửa, xoá thẻ" textFill="#f0f0f0" style="-fx-font-size: 12;" />
+                            <Label text="📚" style="-fx-font-size: 64;" />
+                            <Label text="Quản lý từ vựng" textFill="WHITE"
+                                   style="-fx-font-size: 22; -fx-font-weight: bold;" />
+                            <Label text="Thêm, sửa, xóa thẻ từ vựng" textFill="#f0f0f0"
+                                   style="-fx-font-size: 14;" />
                         </children>
                     </VBox>
 
                     <!-- Card 2: Học tập -->
                     <VBox alignment="CENTER" spacing="15" onMouseClicked="#openStudyMode"
-                          styleClass="task-card"
-                          style="-fx-background-color: linear-gradient(to bottom right, #f093fb, #f5576c); -fx-background-radius: 15; -fx-padding: 20; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);"
+                          maxWidth="Infinity" maxHeight="Infinity"
+                          style="-fx-background-color: linear-gradient(to bottom right, #f093fb, #f5576c);
+                                 -fx-background-radius: 20;
+                                 -fx-cursor: hand;
+                                 -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 5);"
                           GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <padding>
+                            <Insets top="30" right="30" bottom="30" left="30"/>
+                        </padding>
                         <children>
-                            <Label text="📖" style="-fx-font-size: 48;" />
-                            <Label text="Học tập" textFill="WHITE" style="-fx-font-size: 18; -fx-font-weight: bold;" />
-                            <Label text="Lật thẻ và ghi nhớ" textFill="#f0f0f0" style="-fx-font-size: 12;" />
+                            <Label text="📖" style="-fx-font-size: 64;" />
+                            <Label text="Học tập" textFill="WHITE"
+                                   style="-fx-font-size: 22; -fx-font-weight: bold;" />
+                            <Label text="Lật thẻ và ghi nhớ từ vựng" textFill="#f0f0f0"
+                                   style="-fx-font-size: 14;" />
                         </children>
                     </VBox>
 
                     <!-- Card 3: Kiểm tra -->
                     <VBox alignment="CENTER" spacing="15" onMouseClicked="#openTestMode"
-                          styleClass="task-card"
-                          style="-fx-background-color: linear-gradient(to bottom right, #4facfe, #00f2fe); -fx-background-radius: 15; -fx-padding: 20; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);"
+                          maxWidth="Infinity" maxHeight="Infinity"
+                          style="-fx-background-color: linear-gradient(to bottom right, #4facfe, #00f2fe);
+                                 -fx-background-radius: 20;
+                                 -fx-cursor: hand;
+                                 -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 5);"
                           GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <padding>
+                            <Insets top="30" right="30" bottom="30" left="30"/>
+                        </padding>
                         <children>
-                            <Label text="✅" style="-fx-font-size: 48;" />
-                            <Label text="Kiểm tra" textFill="WHITE" style="-fx-font-size: 18; -fx-font-weight: bold;" />
-                            <Label text="Nhập đáp án" textFill="#f0f0f0" style="-fx-font-size: 12;" />
+                            <Label text="✅" style="-fx-font-size: 64;" />
+                            <Label text="Kiểm tra" textFill="WHITE"
+                                   style="-fx-font-size: 22; -fx-font-weight: bold;" />
+                            <Label text="Nhập đáp án và kiểm tra" textFill="#f0f0f0"
+                                   style="-fx-font-size: 14;" />
                         </children>
                     </VBox>
 
                     <!-- Card 4: Thống kê -->
                     <VBox alignment="CENTER" spacing="15" onMouseClicked="#openStatistics"
-                          styleClass="task-card"
-                          style="-fx-background-color: linear-gradient(to bottom right, #43e97b, #38f9d7); -fx-background-radius: 15; -fx-padding: 20; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);"
+                          maxWidth="Infinity" maxHeight="Infinity"
+                          style="-fx-background-color: linear-gradient(to bottom right, #43e97b, #38f9d7);
+                                 -fx-background-radius: 20;
+                                 -fx-cursor: hand;
+                                 -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 5);"
                           GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <padding>
+                            <Insets top="30" right="30" bottom="30" left="30"/>
+                        </padding>
                         <children>
-                            <Label text="📊" style="-fx-font-size: 48;" />
-                            <Label text="Thống kê" textFill="WHITE" style="-fx-font-size: 18; -fx-font-weight: bold;" />
-                            <Label text="Streak và tiến độ" textFill="#f0f0f0" style="-fx-font-size: 12;" />
+                            <Label text="📊" style="-fx-font-size: 64;" />
+                            <Label text="Thống kê" textFill="WHITE"
+                                   style="-fx-font-size: 22; -fx-font-weight: bold;" />
+                            <Label text="Theo dõi streak và tiến độ" textFill="#f0f0f0"
+                                   style="-fx-font-size: 14;" />
                         </children>
                     </VBox>
                 </GridPane>

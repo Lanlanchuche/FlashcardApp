@@ -41,6 +41,26 @@ public class LoginController {
 
         User user = userDAO.login(username, password);
         if(user != null){
+            try {
+                // Load MainMenu
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
+                Parent root = loader.load();
+
+                // Get controller and pass user data
+                MainMenuController controller = loader.getController();
+                controller.setUser(user);
+
+                // Navigate to MainMenu
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setMaximized(false);
+                stage.setScene(new Scene(root, 1280, 720));
+                stage.setTitle("Flashcard Learning - Menu Chính");
+                stage.setMaximized(true);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showError("Không thể mở màn hình menu chính!");
+            }
 
         }
         else{
@@ -53,10 +73,12 @@ public class LoginController {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Welcome.fxml"));
             Parent root = loader.load();
-            WelcomeController controller = loader.getController();
 
             Stage stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setMaximized(true);
+            stage.setTitle("Flashcard Learning - Welcome");
+            stage.show();
         }
         catch(IOException e){
             e.printStackTrace();
@@ -87,6 +109,11 @@ public class LoginController {
             e.printStackTrace();
             showError("Không thể mở màn hình đăng ký!");
         }
+
+    }
+
+    @FXML
+    void handleForgotPassword(ActionEvent event){
 
     }
 
