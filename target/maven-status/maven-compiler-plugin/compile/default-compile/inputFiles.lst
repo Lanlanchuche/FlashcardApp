@@ -5,6 +5,7 @@ E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\SessionManag
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\StudyModeController.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\database\StreakDAO.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\constant\ErrorMessage.java
+E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\model\Topic.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\LoginController.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\WelcomeController.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\database\UserDAO.java
@@ -13,6 +14,7 @@ E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\MyFlashcardApp.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\database\FlashcardDAO.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\App.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\VocabularyManagementController.java
+E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\database\TopicDAO.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\MainMenuController.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\model\User.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\constant\SuccessMessage.java

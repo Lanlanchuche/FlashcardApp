@@ -42,15 +42,12 @@ public class LoginController {
         User user = userDAO.login(username, password);
         if(user != null){
             try {
-                // Load MainMenu
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
                 Parent root = loader.load();
 
-                // Get controller and pass user data
                 MainMenuController controller = loader.getController();
                 controller.setUser(user);
 
-                // Navigate to MainMenu
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setMaximized(false);
                 stage.setScene(new Scene(root, 1280, 720));
