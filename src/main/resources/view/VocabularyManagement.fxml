@@ -1,275 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="720" prefWidth="1280"
-            style="-fx-background-color: #f0f2f5;"
-            xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.mycompany.flashcardapp.controller.VocabularyManagementController">
-
-    <top>
-        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #2c3e50;">
-            <padding>
-                <Insets top="15" right="20" bottom="15" left="20"/>
-            </padding>
-            <children>
-                <Button fx:id="backButton" onAction="#handleBack" text="← Quay lại"
-                        style="-fx-background-color: transparent; -fx-text-fill: white;
-                               -fx-border-color: white; -fx-border-radius: 8; -fx-background-radius: 8;
-                               -fx-padding: 10 20; -fx-font-size: 14; -fx-cursor: hand;" />
-                <Region HBox.hgrow="ALWAYS" />
-                <Label fx:id="titleLabel" text="📚 Quản lý Chủ đề" textFill="WHITE"
-                       style="-fx-font-weight: bold; -fx-font-size: 22;" />
-                <Region HBox.hgrow="ALWAYS" />
-                <Button onAction="#handleLogout" text="Đăng xuất"
-                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;
-                               -fx-font-size: 14; -fx-cursor: hand; -fx-background-radius: 8;
-                               -fx-padding: 10 20;" />
-            </children>
-        </HBox>
-    </top>
-
-    <center>
-        <StackPane fx:id="contentPane">
-            <!-- ==================== TOPICS VIEW ==================== -->
-            <VBox fx:id="topicsView" spacing="30" alignment="TOP_CENTER">
-                <padding>
-                    <Insets top="40" right="80" bottom="40" left="80"/>
-                </padding>
-                <children>
-                    <!-- Create Topic Section -->
-                    <HBox spacing="15" alignment="CENTER" maxWidth="700">
-                        <children>
-                            <TextField fx:id="newTopicField"
-                                       promptText="🏷️ Nhập tên chủ đề mới..."
-                                       prefHeight="50" prefWidth="400"
-                                       style="-fx-background-color: white;
-                                              -fx-background-radius: 12;
-                                              -fx-border-color: #e0e0e0;
-                                              -fx-border-radius: 12;
-                                              -fx-font-size: 15;
-                                              -fx-padding: 0 20;
-                                              -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8, 0, 0, 2);" />
-                            <Button onAction="#handleCreateTopic"
-                                    text="➕ Tạo chủ đề"
-                                    prefHeight="50" prefWidth="150"
-                                    style="-fx-background-color: linear-gradient(to right, #667eea, #764ba2);
-                                           -fx-text-fill: white;
-                                           -fx-font-size: 15;
-                                           -fx-font-weight: bold;
-                                           -fx-background-radius: 12;
-                                           -fx-cursor: hand;
-                                           -fx-effect: dropshadow(three-pass-box, rgba(102,126,234,0.4), 10, 0, 0, 3);" />
-                        </children>
-                    </HBox>
-
-                    <!-- Topics Header -->
-                    <HBox alignment="CENTER_LEFT" maxWidth="900">
-                        <children>
-                            <Label text="📂 Danh sách chủ đề"
-                                   style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
-                            <Region HBox.hgrow="ALWAYS" />
-                            <Label fx:id="topicCountLabel" text="0 chủ đề"
-                                   style="-fx-font-size: 14; -fx-text-fill: #7f8c8d; -fx-font-weight: 600;" />
-                        </children>
-                    </HBox>
-
-                    <!-- Topics Grid -->
-                    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
-                                style="-fx-background-color: transparent; -fx-background: transparent;">
-                        <content>
-                            <FlowPane fx:id="topicsFlowPane" hgap="25" vgap="25" alignment="CENTER"
-                                      style="-fx-padding: 10;">
-                                <!-- Topic cards will be added dynamically -->
-                            </FlowPane>
-                        </content>
-                    </ScrollPane>
-
-                    <!-- Edit/Delete Selected Topic -->
-                    <HBox fx:id="topicActionsPane" spacing="15" alignment="CENTER" visible="false" managed="false">
-                        <children>
-                            <Label fx:id="selectedTopicLabel" text="Đang chọn: "
-                                   style="-fx-font-size: 14; -fx-text-fill: #34495e; -fx-font-weight: 600;" />
-                            <TextField fx:id="editTopicField" promptText="Tên mới..."
-                                       prefHeight="40" prefWidth="200"
-                                       style="-fx-background-color: white;
-                                              -fx-background-radius: 8;
-                                              -fx-border-color: #3498db;
-                                              -fx-border-radius: 8;
-                                              -fx-font-size: 14;" />
-                            <Button onAction="#handleEditTopic" text="✏️ Đổi tên" prefHeight="40"
-                                    style="-fx-background-color: #3498db; -fx-text-fill: white;
-                                           -fx-font-size: 13; -fx-font-weight: bold;
-                                           -fx-background-radius: 8; -fx-cursor: hand;" />
-                            <Button onAction="#handleDeleteTopic" text="🗑️ Xóa chủ đề" prefHeight="40"
-                                    style="-fx-background-color: #e74c3c; -fx-text-fill: white;
-                                           -fx-font-size: 13; -fx-font-weight: bold;
-                                           -fx-background-radius: 8; -fx-cursor: hand;" />
-                            <Button onAction="#handleCancelSelection" text="✖ Hủy" prefHeight="40"
-                                    style="-fx-background-color: #95a5a6; -fx-text-fill: white;
-                                           -fx-font-size: 13; -fx-font-weight: bold;
-                                           -fx-background-radius: 8; -fx-cursor: hand;" />
-                        </children>
-                    </HBox>
-                </children>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox maxWidth="520.0" minWidth="400.0" prefWidth="460.0" spacing="150.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.12), 25, 0, 0, 6);" StackPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="78.0" prefWidth="347.0">
+               <children>
+                  <TextField alignment="TOP_LEFT" prefHeight="38.0" prefWidth="200.0" promptText="Tìm tên chủ đề " style="-fx-background-radius: 20; -fx-padding: 10;" />
+               </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
             </VBox>
-
-            <!-- ==================== FLASHCARDS VIEW ==================== -->
-            <VBox fx:id="flashcardsView" spacing="20" visible="false" managed="false">
-                <padding>
-                    <Insets top="30" right="40" bottom="30" left="40"/>
-                </padding>
-                <children>
-                    <!-- Current Topic Header -->
-                    <HBox alignment="CENTER_LEFT" spacing="15"
-                          style="-fx-background-color: linear-gradient(to right, #667eea, #764ba2);
-                                 -fx-background-radius: 15;
-                                 -fx-padding: 20 30;">
-                        <children>
-                            <Label text="📁" style="-fx-font-size: 32;" />
-                            <VBox spacing="3">
-                                <children>
-                                    <Label text="Đang xem chủ đề:" textFill="#e0e0e0"
-                                           style="-fx-font-size: 12;" />
-                                    <Label fx:id="currentTopicLabel" text="[Tên chủ đề]" textFill="WHITE"
-                                           style="-fx-font-size: 22; -fx-font-weight: bold;" />
-                                </children>
-                            </VBox>
-                            <Region HBox.hgrow="ALWAYS" />
-                            <Label fx:id="flashcardCountLabel" text="0 thẻ" textFill="WHITE"
-                                   style="-fx-font-size: 16; -fx-font-weight: 600;
-                                          -fx-background-color: rgba(255,255,255,0.2);
-                                          -fx-background-radius: 20;
-                                          -fx-padding: 8 20;" />
-                        </children>
-                    </HBox>
-
-                    <!-- Flashcard Input Form -->
-                    <VBox spacing="15"
-                          style="-fx-background-color: white;
-                                 -fx-background-radius: 15;
-                                 -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 15, 0, 0, 5);
-                                 -fx-padding: 25;">
-                        <children>
-                            <Label text="📝 Thêm/Sửa từ vựng"
-                                   style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
-                            <Separator style="-fx-background-color: #ecf0f1;" />
-
-                            <HBox spacing="20" alignment="CENTER_LEFT">
-                                <children>
-                                    <VBox spacing="6" HBox.hgrow="ALWAYS">
-                                        <children>
-                                            <Label text="Từ vựng (English)"
-                                                   style="-fx-font-size: 13; -fx-font-weight: 600; -fx-text-fill: #34495e;" />
-                                            <TextField fx:id="vocabField"
-                                                       promptText="Nhập từ tiếng Anh..."
-                                                       prefHeight="45"
-                                                       style="-fx-background-color: #f8f9fa;
-                                                              -fx-background-radius: 10;
-                                                              -fx-border-color: #e0e0e0;
-                                                              -fx-border-radius: 10;
-                                                              -fx-font-size: 14;
-                                                              -fx-padding: 0 15;" />
-                                        </children>
-                                    </VBox>
-
-                                    <VBox spacing="6" HBox.hgrow="ALWAYS">
-                                        <children>
-                                            <Label text="Nghĩa (Vietnamese)"
-                                                   style="-fx-font-size: 13; -fx-font-weight: 600; -fx-text-fill: #34495e;" />
-                                            <TextField fx:id="defField"
-                                                       promptText="Nhập nghĩa tiếng Việt..."
-                                                       prefHeight="45"
-                                                       style="-fx-background-color: #f8f9fa;
-                                                              -fx-background-radius: 10;
-                                                              -fx-border-color: #e0e0e0;
-                                                              -fx-border-radius: 10;
-                                                              -fx-font-size: 14;
-                                                              -fx-padding: 0 15;" />
-                                        </children>
-                                    </VBox>
-                                </children>
-                            </HBox>
-
-                            <!-- Action Buttons -->
-                            <HBox spacing="12" alignment="CENTER_LEFT">
-                                <children>
-                                    <Button onAction="#handleAddFlashcard" text="➕ Thêm thẻ"
-                                            prefHeight="42" prefWidth="130"
-                                            style="-fx-background-color: linear-gradient(to right, #56ab2f, #a8e063);
-                                                   -fx-text-fill: white;
-                                                   -fx-font-size: 14;
-                                                   -fx-font-weight: bold;
-                                                   -fx-background-radius: 10;
-                                                   -fx-cursor: hand;" />
-                                    <Button onAction="#handleUpdateFlashcard" text="✏️ Cập nhật"
-                                            prefHeight="42" prefWidth="130"
-                                            style="-fx-background-color: linear-gradient(to right, #f093fb, #f5576c);
-                                                   -fx-text-fill: white;
-                                                   -fx-font-size: 14;
-                                                   -fx-font-weight: bold;
-                                                   -fx-background-radius: 10;
-                                                   -fx-cursor: hand;" />
-                                    <Button onAction="#handleDeleteFlashcard" text="🗑️ Xóa thẻ"
-                                            prefHeight="42" prefWidth="120"
-                                            style="-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);
-                                                   -fx-text-fill: white;
-                                                   -fx-font-size: 14;
-                                                   -fx-font-weight: bold;
-                                                   -fx-background-radius: 10;
-                                                   -fx-cursor: hand;" />
-                                </children>
-                            </HBox>
-                        </children>
-                    </VBox>
-
-                    <!-- Flashcards Table -->
-                    <VBox spacing="15" VBox.vgrow="ALWAYS"
-                          style="-fx-background-color: white;
-                                 -fx-background-radius: 15;
-                                 -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 15, 0, 0, 5);
-                                 -fx-padding: 25;">
-                        <children>
-                            <HBox alignment="CENTER_LEFT" spacing="15">
-                                <children>
-                                    <Label text="📚 Danh sách từ vựng"
-                                           style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
-                                    <Region HBox.hgrow="ALWAYS" />
-                                    <TextField fx:id="searchField"
-                                               promptText="🔍 Tìm kiếm..."
-                                               prefHeight="38" prefWidth="250"
-                                               style="-fx-background-color: #f8f9fa;
-                                                      -fx-background-radius: 10;
-                                                      -fx-border-color: #e0e0e0;
-                                                      -fx-border-radius: 10;
-                                                      -fx-font-size: 13;
-                                                      -fx-padding: 0 15;" />
-                                </children>
-                            </HBox>
-
-                            <Separator style="-fx-background-color: #ecf0f1;" />
-
-                            <TableView fx:id="flashcardTable" VBox.vgrow="ALWAYS"
-                                       style="-fx-background-color: transparent;
-                                              -fx-background-radius: 10;
-                                              -fx-border-color: #ecf0f1;
-                                              -fx-border-radius: 10;">
-                                <columns>
-                                    <TableColumn fx:id="idColumn" text="ID" prefWidth="60" />
-                                    <TableColumn fx:id="vocabularyColumn" text="Từ vựng (EN)" prefWidth="300" />
-                                    <TableColumn fx:id="definitionColumn" text="Nghĩa (VI)" prefWidth="400" />
-                                </columns>
-                                <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                </columnResizePolicy>
-                            </TableView>
-                        </children>
-                    </VBox>
-                </children>
-            </VBox>
-        </StackPane>
-    </center>
-</BorderPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <ListView prefHeight="236.0" prefWidth="440.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-control-inner-background: fx-control-inner-background;" visible="false" />
+                  <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@anh1.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+               <children>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="159.0" style="-fx-background-color: #8E62A6; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(102, 126, 234, 0.4), 10, 0, 0, 3);" text="Quay lại" />
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="177.0" style="-fx-background-color: #8E62A6; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(102, 126, 234, 0.4), 10, 0, 0, 3);" text="Thêm chủ đề " />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="-60.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+         </padding>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="30.0" left="60.0" right="60.0" top="30.0" />
+   </padding>
+</StackPane>
