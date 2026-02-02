@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
+<?import javafx.scene.text.Text?>
 
 <StackPane prefHeight="711.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -15,7 +15,12 @@
             <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
          </padding>
          <children>
-            <TextField prefHeight="53.0" prefWidth="394.0" promptText="Nhập tên chủ đề " style="-fx-background-radius: 20;">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hãy đặt tên chủ đề ">
+               <font>
+                  <Font name="Times New Roman" size="30.0" />
+               </font>
+            </Text>
+            <TextField prefHeight="53.0" prefWidth="394.0" promptText="Tên chủ đề " style="-fx-background-radius: 20;">
                <font>
                   <Font name="Times New Roman" size="20.0" />
                </font>

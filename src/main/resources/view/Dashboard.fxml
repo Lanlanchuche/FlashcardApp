@@ -11,7 +11,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <StackPane prefHeight="750.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="CENTER" maxWidth="520.0" minWidth="400.0" prefWidth="460.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.12), 25, 0, 0, 6);" StackPane.alignment="CENTER">
@@ -80,15 +79,20 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <VBox alignment="CENTER" prefHeight="40.0" prefWidth="440.0">
+            <HBox spacing="150.0">
                <children>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="46.0" prefWidth="142.0" style="-fx-background-color: #8E62A6; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(102, 126, 234, 0.4), 10, 0, 0, 3);" text="Xóa" textFill="WHITE">
+                     <font>
+                        <Font name="Times New Roman" size="25.0" />
+                     </font>
+                  </Button>
                   <Button alignment="CENTER" mnemonicParsing="false" prefHeight="46.0" prefWidth="142.0" style="-fx-background-color: #8E62A6; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(102, 126, 234, 0.4), 10, 0, 0, 3);" text="Lưu" textFill="WHITE">
                      <font>
                         <Font name="Times New Roman" size="25.0" />
                      </font>
                   </Button>
                </children>
-            </VBox>
+            </HBox>
          </children>
       </VBox>
    </children>
