@@ -11,7 +11,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-
 public class RegisterController {
 
     // FXML Components
@@ -37,7 +36,6 @@ public class RegisterController {
     private Label registerErrorLabel;
 
     private final UserDAO userDAO = new UserDAO();
-
 
     @FXML
     private void handleRegister() {
@@ -98,7 +96,20 @@ public class RegisterController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
             Parent root = loader.load();
 
-            Stage stage = (Stage) backToLoginButton.getScene().getWindow();
+            Stage stage = null;
+            if (backToLoginButton != null && backToLoginButton.getScene() != null) {
+                stage = (Stage) backToLoginButton.getScene().getWindow();
+            } else if (registerButton != null && registerButton.getScene() != null) {
+                stage = (Stage) registerButton.getScene().getWindow();
+            } else if (usernameField != null && usernameField.getScene() != null) {
+                stage = (Stage) usernameField.getScene().getWindow();
+            }
+
+            if (stage == null) {
+                showError("Không thể lấy thông tin cửa sổ!");
+                return;
+            }
+
             stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
             stage.setTitle("Flashcard Learning - Đăng nhập");
@@ -135,7 +146,7 @@ public class RegisterController {
             Parent root = loader.load();
 
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            stage.setMaximized(false);
+            stage.setMaximized(true);
             stage.setScene(new Scene(root, 1280, 720));
             stage.setTitle("Flashcard Learning - Đăng nhập");
             stage.setMaximized(true);

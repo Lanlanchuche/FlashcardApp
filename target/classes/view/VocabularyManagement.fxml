@@ -11,29 +11,24 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.flashcardapp.controller.VocabularyManagementController">
    <children>
-      <VBox maxWidth="520.0" minWidth="400.0" prefWidth="460.0" spacing="150.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.12), 25, 0, 0, 6);" StackPane.alignment="CENTER">
+      <VBox maxWidth="600.0" minWidth="500.0" prefWidth="580.0" spacing="30.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.12), 25, 0, 0, 6);" StackPane.alignment="CENTER">
          <children>
             <HBox spacing="20.0">
                <children>
-                  <TextField fx:id="searchTopicTextField" alignment="TOP_LEFT" prefHeight="38.0" prefWidth="326.0" promptText="Tìm tên chủ đề " style="-fx-background-radius: 20; -fx-padding: 10;" />
-                  <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleSearchTopic" onMouseClicked="#handleSearchTopic" prefHeight="0.0" prefWidth="99.0" style="-fx-background-color: #8E62A6; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 30; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(102, 126, 234, 0.4), 10, 0, 0, 3);" text="Tìm kiếm" />
+                  <TextField fx:id="searchTopicTextField" alignment="TOP_LEFT" prefHeight="38.0" prefWidth="380.0" promptText="Tìm tên chủ đề " style="-fx-background-radius: 20; -fx-padding: 10;" />
+                  <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleSearchTopic" onMouseClicked="#handleSearchTopic" prefHeight="38.0" prefWidth="120.0" style="-fx-background-color: #8E62A6; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 30; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(102, 126, 234, 0.4), 10, 0, 0, 3);" text="Tìm kiếm" />
                </children>
             </HBox>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
+            <StackPane prefHeight="380.0" prefWidth="520.0" VBox.vgrow="ALWAYS">
                <children>
-                  <ListView fx:id="topicListView" prefHeight="236.0" prefWidth="440.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-control-inner-background: fx-control-inner-background;" visible="false" />
-                  <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                  </ImageView>
+                  <ListView fx:id="topicListView" prefHeight="380.0" prefWidth="520.0" style="-fx-background-color: white; -fx-border-color: #E0E0E0; -fx-border-radius: 10; -fx-background-radius: 10; -fx-font-size: 15px;" />
                </children>
             </StackPane>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="150.0">
+            <HBox prefHeight="60.0" prefWidth="200.0" spacing="20.0" alignment="CENTER">
                <children>
-                  <Button fx:id="backButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleBack" prefHeight="55.0" prefWidth="159.0" style="-fx-background-color: #8E62A6; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(102, 126, 234, 0.4), 10, 0, 0, 3);" text="Quay lại" />
-                  <Button fx:id="addTopicButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleAddTopic" prefHeight="56.0" prefWidth="177.0" style="-fx-background-color: #8E62A6; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(102, 126, 234, 0.4), 10, 0, 0, 3);" text="Thêm chủ đề " />
+                  <Button fx:id="backButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleBack" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #8E62A6; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(102, 126, 234, 0.4), 10, 0, 0, 3);" text="Quay lại" />
+                  <Button fx:id="addTopicButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleAddTopic" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #8E62A6; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(102, 126, 234, 0.4), 10, 0, 0, 3);" text="Thêm chủ đề " />
                </children>
-               <VBox.margin>
-                  <Insets bottom="-60.0" />
-               </VBox.margin>
             </HBox>
          </children>
          <padding>

@@ -15,7 +15,9 @@ com\mycompany\flashcardapp\model\User.class
 com\mycompany\flashcardapp\App.class
 com\mycompany\flashcardapp\model\Topic.class
 com\mycompany\flashcardapp\constant\ErrorMessage.class
+com\mycompany\flashcardapp\controller\VocabularyOfTopicController.class
 com\mycompany\flashcardapp\controller\VocabularyManagementController.class
 com\mycompany\flashcardapp\database\StreakDAO.class
 com\mycompany\flashcardapp\controller\MainMenuController.class
 com\mycompany\flashcardapp\controller\SessionManager.class
+com\mycompany\flashcardapp\controller\VocabularyManagementController$1.class

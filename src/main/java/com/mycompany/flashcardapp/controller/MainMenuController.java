@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
 public class MainMenuController {
 
     @FXML
@@ -36,9 +35,7 @@ public class MainMenuController {
     @FXML
     private Label welcomeLabel;
 
-
     private User currentUser;
-
 
     public void setUser(User user) {
         this.currentUser = user;
@@ -67,12 +64,23 @@ public class MainMenuController {
 
     @FXML
     void openVocabularyManagement(MouseEvent event) {
+        System.out.println("=== MainMenuController.openVocabularyManagement() called ===");
+        System.out.println("DEBUG: currentUser = "
+                + (currentUser != null ? currentUser.getUsername() + " (ID: " + currentUser.getId() + ")" : "NULL"));
+
+        if (currentUser == null) {
+            System.err.println("ERROR: currentUser is NULL! Cannot open VocabularyManagement.");
+            return;
+        }
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/VocabularyManagement.fxml"));
             Parent root = loader.load();
 
             VocabularyManagementController controller = loader.getController();
+            System.out.println("DEBUG: Passing user to VocabularyManagementController: " + currentUser.getUsername());
             controller.setUser(currentUser);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
@@ -80,11 +88,11 @@ public class MainMenuController {
             stage.setMaximized(true);
             stage.show();
         } catch (IOException e) {
+            System.err.println("ERROR: Failed to open VocabularyManagement screen");
             e.printStackTrace();
             System.err.println("Không thể mở màn hình Quản lý từ vựng");
         }
     }
-
 
     @FXML
     void openStudyMode(MouseEvent event) {
@@ -104,7 +112,6 @@ public class MainMenuController {
         }
     }
 
-
     @FXML
     void openTestMode(MouseEvent event) {
         try {
@@ -122,7 +129,6 @@ public class MainMenuController {
             System.err.println("Không thể mở màn hình Kiểm tra");
         }
     }
-
 
     @FXML
     void openStatistics(MouseEvent event) {

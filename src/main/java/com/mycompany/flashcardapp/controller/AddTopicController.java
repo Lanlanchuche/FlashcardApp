@@ -42,7 +42,7 @@ public class AddTopicController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/VocabularyOfTopic.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
+            stage.setScene(new Scene(root, 1280, 720));
             stage.setMaximized(true);
             stage.setTitle("Quản lí từ vựng");
             stage.show();
