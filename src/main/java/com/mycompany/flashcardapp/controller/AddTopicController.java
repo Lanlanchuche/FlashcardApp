@@ -25,40 +25,55 @@ public class AddTopicController {
 
     @FXML
     void addTopicName(ActionEvent event) {
-        String topicName = topicNameField.getText();
+        String topicName = topicNameField.getText().trim();
 
         if (topicName.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Thông báo", "Vui lòng nhập tên chủ đề!");
             return;
         }
-        topicDAO.addTopic(this.currentUser.getId(),topicName);
 
-        goToVocabularyOfTopic(event);
+        if (currentUser == null) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không tìm thấy thông tin người dùng!");
+            return;
+        }
 
+        topicDAO.addTopic(this.currentUser.getId(), topicName);
+        showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đã thêm chủ đề: " + topicName);
+
+        goBackToVocabularyManagement(event);
     }
 
-    public void goToVocabularyOfTopic(ActionEvent event) {
+    private void goBackToVocabularyManagement(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/VocabularyOfTopic.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/VocabularyManagement.fxml"));
             Parent root = loader.load();
-            Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root, 1280, 720));
-            stage.setMaximized(true);
-            stage.setTitle("Quản lí từ vựng");
-            stage.show();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Không thể chuyển sang màn hình Quản lí từ vựng");
-        }
 
+            VocabularyManagementController controller = loader.getController();
+            controller.setUser(this.currentUser);
+
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setMaximized(false);
+            stage.setScene(new Scene(root, 1280, 720));
+            stage.setTitle("Flashcard Learning - Quản lý từ vựng");
+            stage.setMaximized(true);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể quay lại màn hình quản lý từ vựng!");
+        }
     }
+
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    @FXML
+    void handleBack(ActionEvent event) {
+        goBackToVocabularyManagement(event);
     }
 
     public void setUser(User user) {
