@@ -15,6 +15,7 @@ E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\database\FlashcardDAO.j
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\App.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\VocabularyManagementController.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\database\TopicDAO.java
+E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\AddTopicController.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\MainMenuController.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\model\User.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\constant\SuccessMessage.java

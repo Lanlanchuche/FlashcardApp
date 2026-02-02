@@ -99,6 +99,7 @@ public class LoginController {
             Parent root = loader.load();
             Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setMaximized(true);
             stage.setTitle("Flashcard Learning - Đăng ký");
             stage.show();
         }

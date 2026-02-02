@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 
-  <StackPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.flashcardapp.controller.RegisterController">
+  <StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.flashcardapp.controller.RegisterController">
       <padding>
           <Insets bottom="30" left="60" right="60" top="30" />
       </padding>

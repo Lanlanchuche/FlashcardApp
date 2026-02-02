@@ -11,10 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-/**
- * Controller for the Registration screen
- * Handles user registration, form validation, and navigation
- */
+
 public class RegisterController {
 
     // FXML Components
@@ -39,13 +36,9 @@ public class RegisterController {
     @FXML
     private Label registerErrorLabel;
 
-    // Database Access Object
     private final UserDAO userDAO = new UserDAO();
 
-    /**
-     * Handle user registration
-     * Validates input and creates new user account
-     */
+
     @FXML
     private void handleRegister() {
         String username = usernameField.getText().trim();
