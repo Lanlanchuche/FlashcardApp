@@ -22,11 +22,17 @@ public class TestModeMenuController {
     @FXML
     private Label instructionLabel;
 
-    private User currentUser;
+    @FXML
+    public void initialize() {
+        User currentUser = SessionManager.getInstance().getCurrentUser();
+        if (currentUser != null && instructionLabel != null) {
+            instructionLabel.setText(currentUser.getUsername() + " hãy chọn hình thức kiểm tra để bắt đầu :3");
+        }
+    }
 
     @FXML
     void handleRandomTest(ActionEvent event) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/RandomTest.fxml"));
             Parent root = loader.load();
 
@@ -35,8 +41,7 @@ public class TestModeMenuController {
             stage.setScene(new Scene(root, 1280, 720));
             stage.setMaximized(true);
             stage.show();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Loi chuyen sang muc kiem tra");
         }
@@ -45,7 +50,7 @@ public class TestModeMenuController {
 
     @FXML
     void handleTopicTest(ActionEvent event) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TopicTest.fxml"));
             Parent root = loader.load();
 
@@ -54,19 +59,9 @@ public class TestModeMenuController {
             stage.setScene(new Scene(root, 1280, 720));
             stage.setMaximized(true);
             stage.show();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Loi chuyen sang muc kiem tra");
-        }
-
-
-    }
-
-    public void setUser(User user) {
-        this.currentUser = user;
-        if (user != null && instructionLabel != null) {
-            instructionLabel.setText( user.getUsername() + " hãy chọn hình thức kiểm tra để bắt đầu :3");
         }
     }
 

@@ -211,9 +211,6 @@ public class VocabularyOfTopicController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/VocabularyManagement.fxml"));
             Parent root = loader.load();
 
-            VocabularyManagementController controller = loader.getController();
-            controller.setUser(this.currentUser);
-
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));

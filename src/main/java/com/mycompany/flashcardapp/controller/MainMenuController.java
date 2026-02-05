@@ -35,12 +35,11 @@ public class MainMenuController {
     @FXML
     private Label welcomeLabel;
 
-    private User currentUser;
-
-    public void setUser(User user) {
-        this.currentUser = user;
-        if (user != null && welcomeLabel != null) {
-            welcomeLabel.setText("Xin chào, " + user.getUsername() + "!");
+    @FXML
+    public void initialize() {
+        User currentUser = SessionManager.getInstance().getCurrentUser();
+        if (currentUser != null && welcomeLabel != null) {
+            welcomeLabel.setText("Xin chào, " + currentUser.getUsername() + "!");
         }
     }
 
@@ -64,6 +63,7 @@ public class MainMenuController {
 
     @FXML
     void openVocabularyManagement(MouseEvent event) {
+        User currentUser = SessionManager.getInstance().getCurrentUser();
         System.out.println("=== MainMenuController.openVocabularyManagement() called ===");
         System.out.println("DEBUG: currentUser = "
                 + (currentUser != null ? currentUser.getUsername() + " (ID: " + currentUser.getId() + ")" : "NULL"));
@@ -77,9 +77,7 @@ public class MainMenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/VocabularyManagement.fxml"));
             Parent root = loader.load();
 
-            VocabularyManagementController controller = loader.getController();
-            System.out.println("DEBUG: Passing user to VocabularyManagementController: " + currentUser.getUsername());
-            controller.setUser(currentUser);
+            System.out.println("DEBUG: User already set in SessionManager: " + currentUser.getUsername());
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setMaximized(false);
