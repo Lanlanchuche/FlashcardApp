@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to bottom right, #f093fb 0%, #f5576c 100%);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.flashcardapp.controller.TopicTestController">
+    <children>
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: rgba(0, 0, 0, 0.3); -fx-padding: 20;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Button mnemonicParsing="false" onAction="#backToTestMenu" style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-size: 14; -fx-padding: 10 20;" text="← Quay lại">
+                    <effect>
+                        <DropShadow offsetY="2.0" radius="5.0" width="10.0">
+                            <color>
+                                <Color opacity="0.3" />
+                            </color>
+                        </DropShadow>
+                    </effect>
+                </Button>
+                <Label text="KIỂM TRA THEO CHỦ ĐỀ" textFill="WHITE">
+                    <font>
+                        <Font name="Segoe UI Bold" size="28.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label fx:id="scoreLabel" style="-fx-background-color: rgba(255, 255, 255, 0.25); -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 10; -fx-font-weight: bold; -fx-font-size: 16;" text="Điểm: 0/0" />
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
+
+        <!-- Main Content -->
+        <VBox alignment="CENTER" spacing="40.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="120.0">
+            <children>
+                <!-- Topic Selection (shown at start) -->
+                <VBox fx:id="topicSelectionPane" alignment="CENTER" maxWidth="700.0" spacing="30.0" style="-fx-background-color: white; -fx-background-radius: 25; -fx-padding: 60;">
+                    <children>
+                        <Label style="-fx-font-size: 32; -fx-font-weight: bold; -fx-text-fill: #f5576c;" text="Chọn chủ đề để bắt đầu">
+                            <font>
+                                <Font name="Segoe UI Bold" size="32.0" />
+                            </font>
+                        </Label>
+
+                        <Label style="-fx-text-fill: #7f8c8d; -fx-font-size: 16;" text="Hãy chọn một chủ đề từ danh sách bên dưới" textAlignment="CENTER" wrapText="true" />
+
+                        <ComboBox fx:id="topicComboBox" prefHeight="50.0" prefWidth="500.0" promptText="-- Chọn chủ đề --" style="-fx-font-size: 18; -fx-background-radius: 10;">
+                            <effect>
+                                <DropShadow offsetY="2.0" radius="5.0" width="10.0">
+                                    <color>
+                                        <Color opacity="0.1" />
+                                    </color>
+                                </DropShadow>
+                            </effect>
+                        </ComboBox>
+
+                        <Button mnemonicParsing="false" onAction="#startTest" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: #f5576c; -fx-text-fill: white; -fx-background-radius: 15; -fx-cursor: hand; -fx-font-size: 20; -fx-font-weight: bold;" text="Bắt đầu kiểm tra 🚀">
+                            <effect>
+                                <DropShadow offsetY="5.0" radius="10.0" width="20.0">
+                                    <color>
+                                        <Color opacity="0.3" />
+                                    </color>
+                                </DropShadow>
+                            </effect>
+                        </Button>
+                    </children>
+                    <effect>
+                        <DropShadow offsetY="10.0" radius="25.0" width="50.0">
+                            <color>
+                                <Color opacity="0.2" />
+                            </color>
+                        </DropShadow>
+                    </effect>
+                </VBox>
+
+                <!-- Test Content (shown during test) -->
+                <VBox fx:id="testContentPane" alignment="CENTER" spacing="40.0" visible="false">
+                    <children>
+                        <!-- Progress Bar -->
+                        <VBox alignment="CENTER" spacing="10.0">
+                            <children>
+                                <HBox alignment="CENTER" spacing="10.0">
+                                    <children>
+                                        <Label fx:id="progressLabel" style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;" text="Câu 1/10" />
+                                    </children>
+                                </HBox>
+                                <ProgressBar fx:id="progressBar" prefHeight="8.0" prefWidth="600.0" progress="0.1" style="-fx-accent: #f5576c;">
+                                    <effect>
+                                        <DropShadow offsetY="2.0" radius="5.0" width="10.0">
+                                            <color>
+                                                <Color opacity="0.3" />
+                                            </color>
+                                        </DropShadow>
+                                    </effect>
+                                </ProgressBar>
+                            </children>
+                        </VBox>
+
+                        <!-- Question Card -->
+                        <VBox alignment="CENTER" maxWidth="800.0" spacing="30.0" style="-fx-background-color: white; -fx-background-radius: 25; -fx-padding: 60;">
+                            <children>
+                                <Label fx:id="questionTypeLabel" style="-fx-text-fill: #7f8c8d; -fx-font-size: 14;" text="NGHĨA CỦA TỪ SAU LÀ GÌ?" />
+
+                                <Label fx:id="questionLabel" alignment="CENTER" style="-fx-font-size: 42; -fx-font-weight: bold; -fx-text-fill: #f093fb;" text="Loading..." textAlignment="CENTER" wrapText="true">
+                                    <font>
+                                        <Font name="Segoe UI Bold" size="42.0" />
+                                    </font>
+                                </Label>
+
+                                <!-- Fill-in-the-blank type -->
+                                <TextField fx:id="answerField" alignment="CENTER" onAction="#submitAnswer" promptText="Nhập câu trả lời của bạn..." style="-fx-font-size: 24; -fx-padding: 20; -fx-background-radius: 15; -fx-border-color: #f5576c; -fx-border-width: 2; -fx-border-radius: 15;">
+                                    <font>
+                                        <Font size="24.0" />
+                                    </font>
+                                </TextField>
+
+                                <!-- Multiple choice type -->
+                                <VBox fx:id="multipleChoicePane" alignment="CENTER" spacing="15.0" visible="false">
+                                    <children>
+                                        <Button fx:id="optionButton1" mnemonicParsing="false" onAction="#selectOption1" prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 12; -fx-cursor: hand; -fx-font-size: 20; -fx-text-fill: #2c3e50; -fx-alignment: CENTER-LEFT; -fx-padding: 0 30;" text="Option 1">
+                                            <effect>
+                                                <DropShadow offsetY="2.0" radius="5.0" width="10.0">
+                                                    <color>
+                                                        <Color opacity="0.1" />
+                                                    </color>
+                                                </DropShadow>
+                                            </effect>
+                                        </Button>
+                                        <Button fx:id="optionButton2" mnemonicParsing="false" onAction="#selectOption2" prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 12; -fx-cursor: hand; -fx-font-size: 20; -fx-text-fill: #2c3e50; -fx-alignment: CENTER-LEFT; -fx-padding: 0 30;" text="Option 2">
+                                            <effect>
+                                                <DropShadow offsetY="2.0" radius="5.0" width="10.0">
+                                                    <color>
+                                                        <Color opacity="0.1" />
+                                                    </color>
+                                                </DropShadow>
+                                            </effect>
+                                        </Button>
+                                        <Button fx:id="optionButton3" mnemonicParsing="false" onAction="#selectOption3" prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 12; -fx-cursor: hand; -fx-font-size: 20; -fx-text-fill: #2c3e50; -fx-alignment: CENTER-LEFT; -fx-padding: 0 30;" text="Option 3">
+                                            <effect>
+                                                <DropShadow offsetY="2.0" radius="5.0" width="10.0">
+                                                    <color>
+                                                        <Color opacity="0.1" />
+                                                    </color>
+                                                </DropShadow>
+                                            </effect>
+                                        </Button>
+                                    </children>
+                                </VBox>
+
+                                <!-- Word scramble type -->
+                                <VBox fx:id="wordScramblePane" alignment="CENTER" spacing="20.0" visible="false">
+                                    <children>
+                                        <Label style="-fx-text-fill: #7f8c8d; -fx-font-size: 14;" text="SẮP XẾP LẠI CÁC CHỮ CÁI SAU:" />
+                                        <Label fx:id="scrambledLabel" alignment="CENTER" style="-fx-font-size: 36; -fx-font-weight: bold; -fx-text-fill: #e74c3c; -fx-letter-spacing: 5px;" text="SCRAMBLED" textAlignment="CENTER" />
+                                        <TextField fx:id="unscrambleField" alignment="CENTER" onAction="#submitAnswer" promptText="Nhập từ đã sắp xếp..." style="-fx-font-size: 24; -fx-padding: 20; -fx-background-radius: 15; -fx-border-color: #f5576c; -fx-border-width: 2; -fx-border-radius: 15;">
+                                            <font>
+                                                <Font size="24.0" />
+                                            </font>
+                                        </TextField>
+                                    </children>
+                                </VBox>
+
+                                <Label fx:id="feedbackLabel" style="-fx-font-size: 18; -fx-font-weight: bold;" text="" textFill="#27ae60" visible="false" />
+                            </children>
+                            <effect>
+                                <DropShadow offsetY="10.0" radius="25.0" width="50.0">
+                                    <color>
+                                        <Color opacity="0.2" />
+                                    </color>
+                                </DropShadow>
+                            </effect>
+                        </VBox>
+
+                        <!-- Action Buttons -->
+                        <HBox alignment="CENTER" spacing="20.0">
+                            <children>
+                                <Button fx:id="submitButton" defaultButton="true" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 15; -fx-cursor: hand; -fx-font-size: 18; -fx-font-weight: bold;" text="Trả lời ✓">
+                                    <effect>
+                                        <DropShadow offsetY="5.0" radius="10.0" width="20.0">
+                                            <color>
+                                                <Color opacity="0.3" />
+                                            </color>
+                                        </DropShadow>
+                                    </effect>
+                                </Button>
+                                <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextQuestion" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 15; -fx-cursor: hand; -fx-font-size: 18; -fx-font-weight: bold;" text="Tiếp theo →" visible="false">
+                                    <effect>
+                                        <DropShadow offsetY="5.0" radius="10.0" width="20.0">
+                                            <color>
+                                                <Color opacity="0.3" />
+                                            </color>
+                                        </DropShadow>
+                                    </effect>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</AnchorPane>
