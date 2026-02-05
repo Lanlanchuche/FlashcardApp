@@ -22,9 +22,11 @@ public class TestModeMenuController {
     @FXML
     private Label instructionLabel;
 
+    private User currentUser;
+
     @FXML
     public void initialize() {
-        User currentUser = SessionManager.getInstance().getCurrentUser();
+        currentUser = SessionManager.getInstance().getCurrentUser();
         if (currentUser != null && instructionLabel != null) {
             instructionLabel.setText(currentUser.getUsername() + " hãy chọn hình thức kiểm tra để bắt đầu :3");
         }
@@ -43,7 +45,7 @@ public class TestModeMenuController {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Loi chuyen sang muc kiem tra");
+            System.err.println("Loi chuyen sang muc kiem tra radom");
         }
 
     }
@@ -61,7 +63,7 @@ public class TestModeMenuController {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Loi chuyen sang muc kiem tra");
+            System.err.println("Loi chuyen sang muc kiem tra topic");
         }
     }
 

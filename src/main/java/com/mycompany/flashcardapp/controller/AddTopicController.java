@@ -22,6 +22,8 @@ public class AddTopicController {
 
     TopicDAO topicDAO = new TopicDAO();
 
+    private User currentUser;
+
     @FXML
     void addTopicName(ActionEvent event) {
         String topicName = topicNameField.getText().trim();
@@ -31,7 +33,7 @@ public class AddTopicController {
             return;
         }
 
-        User currentUser = SessionManager.getInstance().getCurrentUser();
+        currentUser = SessionManager.getInstance().getCurrentUser();
         if (currentUser == null) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không tìm thấy thông tin người dùng!");
             return;

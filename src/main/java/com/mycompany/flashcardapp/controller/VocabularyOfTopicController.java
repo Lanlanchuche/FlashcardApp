@@ -62,8 +62,8 @@ public class VocabularyOfTopicController {
 
     @FXML
     public void initialize() {
-        vocabCol.setCellValueFactory(new PropertyValueFactory<>("vocabulary"));
-        defCol.setCellValueFactory(new PropertyValueFactory<>("definition"));
+        vocabCol.setCellValueFactory(new PropertyValueFactory<>("Từ vựng"));
+        defCol.setCellValueFactory(new PropertyValueFactory<>("Định nghĩa"));
 
         filteredData = new FilteredList<>(masterData, p -> true);
 

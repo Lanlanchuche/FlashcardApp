@@ -113,7 +113,7 @@ public class MainMenuController {
     @FXML
     void openTestMode(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TestMode.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TestModeMenu.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
