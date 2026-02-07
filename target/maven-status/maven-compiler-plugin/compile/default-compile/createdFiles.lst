@@ -11,6 +11,7 @@ com\mycompany\flashcardapp\controller\WelcomeController.class
 com\mycompany\flashcardapp\constant\SuccessMessage.class
 com\mycompany\flashcardapp\MyFlashcardApp.class
 com\mycompany\flashcardapp\controller\RegisterController.class
+com\mycompany\flashcardapp\controller\RandomTestController$QuestionType.class
 com\mycompany\flashcardapp\controller\TestModeMenuController.class
 com\mycompany\flashcardapp\controller\RandomTestController.class
 com\mycompany\flashcardapp\model\User.class
@@ -21,6 +22,7 @@ com\mycompany\flashcardapp\controller\VocabularyOfTopicController.class
 com\mycompany\flashcardapp\controller\VocabularyManagementController.class
 com\mycompany\flashcardapp\controller\TopicTestController.class
 com\mycompany\flashcardapp\database\StreakDAO.class
+com\mycompany\flashcardapp\controller\RandomTestController$QuestionData.class
 com\mycompany\flashcardapp\controller\MainMenuController.class
 com\mycompany\flashcardapp\controller\SessionManager.class
 com\mycompany\flashcardapp\controller\VocabularyManagementController$1.class
