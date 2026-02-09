@@ -24,7 +24,7 @@
                                 <Font name="Segoe UI Bold" size="32.0" />
                             </font>
                         </Label>
-                        <Label text="hãy chọn hình thức kiểm tra để bắt đầu :3" textFill="#6b6270">
+                        <Label fx:id="instructionLabel" text="hãy chọn hình thức kiểm tra để bắt đầu :3" textFill="#6b6270">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -94,6 +94,7 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </padding>
                 </HBox>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBack" style="-fx-background-color: #764ba2;" text="Quay lại" textFill="#faf9f9" />
             </children>
         </VBox>
     </children>
