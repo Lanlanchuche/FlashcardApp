@@ -41,10 +41,10 @@ public class LoginController {
         User user = userDAO.login(username, password);
         if (user != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
-                Parent root = loader.load();
 
                 SessionManager.getInstance().setCurrentUser(user);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
+                Parent root = loader.load();
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setMaximized(false);
