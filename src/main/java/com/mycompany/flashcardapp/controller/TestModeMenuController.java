@@ -67,4 +67,24 @@ public class TestModeMenuController {
         }
     }
 
+    @FXML
+    void handleBack(ActionEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setMaximized(false);
+            stage.setScene(new Scene(root, 1280, 720));
+            stage.setMaximized(true);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Khong the tro lai MainMenu"
+            );
+        }
+
+    }
+
 }
