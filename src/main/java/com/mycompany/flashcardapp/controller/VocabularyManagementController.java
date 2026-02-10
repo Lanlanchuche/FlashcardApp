@@ -37,7 +37,6 @@ public class VocabularyManagementController {
     private ObservableList<Topic> topicsList = FXCollections.observableArrayList();
     private FilteredList<Topic> filteredTopics;
 
-    private User currentUser;
     private final TopicDAO topicDAO = new TopicDAO();
 
     @FXML
@@ -67,14 +66,14 @@ public class VocabularyManagementController {
                 }
             }
         });
-    }
 
-    public void setUser(User user) {
-        this.currentUser = user;
         loadTopics();
     }
 
     private void loadTopics() {
+        User currentUser = SessionManager.getInstance().getCurrentUser();
+        if (currentUser == null)
+            return;
         try {
             List<Topic> topics = topicDAO.getAllTopics(currentUser.getId());
             topicsList.setAll(topics);
@@ -105,9 +104,6 @@ public class VocabularyManagementController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/topic.fxml"));
             Parent root = loader.load();
 
-            AddTopicController controller = loader.getController();
-            controller.setUser(this.currentUser);
-
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
@@ -122,7 +118,8 @@ public class VocabularyManagementController {
 
     @FXML
     void handleBack(ActionEvent event) {
-        if (this.currentUser == null) {
+        User currentUser = SessionManager.getInstance().getCurrentUser();
+        if (currentUser == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
                 Parent root = loader.load();
@@ -144,9 +141,7 @@ public class VocabularyManagementController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
             Parent root = loader.load();
 
-            MainMenuController controller = loader.getController();
-            controller.setUser(this.currentUser);
-            System.out.println("DEBUG: Passed user back to MainMenu: " + currentUser.getUsername());
+            System.out.println("DEBUG: User already in SessionManager: " + currentUser.getUsername());
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setMaximized(false);
@@ -162,6 +157,7 @@ public class VocabularyManagementController {
     }
 
     private void openVocabularyOfTopic(Topic topic) {
+        User currentUser = SessionManager.getInstance().getCurrentUser();
         if (currentUser == null) {
             System.err.println("ERROR: Cannot open topic - currentUser is NULL");
             showAlert("Lỗi: Không tìm thấy thông tin người dùng.");
@@ -173,7 +169,7 @@ public class VocabularyManagementController {
             Parent root = loader.load();
 
             VocabularyOfTopicController controller = loader.getController();
-            controller.setData(this.currentUser, topic);
+            controller.setData(currentUser, topic);
 
             Stage stage = (Stage) topicListView.getScene().getWindow();
             stage.setMaximized(false);

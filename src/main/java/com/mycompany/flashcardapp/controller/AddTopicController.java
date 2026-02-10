@@ -20,8 +20,9 @@ public class AddTopicController {
     @FXML
     private TextField topicNameField;
 
-    private User currentUser;
     TopicDAO topicDAO = new TopicDAO();
+
+    private User currentUser;
 
     @FXML
     void addTopicName(ActionEvent event) {
@@ -32,12 +33,13 @@ public class AddTopicController {
             return;
         }
 
+        currentUser = SessionManager.getInstance().getCurrentUser();
         if (currentUser == null) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không tìm thấy thông tin người dùng!");
             return;
         }
 
-        topicDAO.addTopic(this.currentUser.getId(), topicName);
+        topicDAO.addTopic(currentUser.getId(), topicName);
         showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đã thêm chủ đề: " + topicName);
 
         goBackToVocabularyManagement(event);
@@ -47,9 +49,6 @@ public class AddTopicController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/VocabularyManagement.fxml"));
             Parent root = loader.load();
-
-            VocabularyManagementController controller = loader.getController();
-            controller.setUser(this.currentUser);
 
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setMaximized(false);
@@ -74,10 +73,6 @@ public class AddTopicController {
     @FXML
     void handleBack(ActionEvent event) {
         goBackToVocabularyManagement(event);
-    }
-
-    public void setUser(User user) {
-        this.currentUser = user;
     }
 
 }
