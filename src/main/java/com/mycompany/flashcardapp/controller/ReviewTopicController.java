@@ -19,41 +19,50 @@ import java.util.List;
 public class ReviewTopicController {
 
     @FXML
-    private TextField searchField;
+    private TextField searchField; //
 
     @FXML
-    private ListView<Topic> topicListView;
+    private ListView<Topic> topicListView; //
 
     @FXML
-    private Button backButton;
-
+    private Button backButton; //
 
     private final TopicDAO topicDAO = new TopicDAO();
     private final ObservableList<Topic> masterData = FXCollections.observableArrayList();
     private FilteredList<Topic> filteredData;
-    private User currentUser;
 
     @FXML
     public void initialize() {
-        // 1. Lấy thông tin người dùng hiện tại
-        currentUser = SessionManager.getInstance().getCurrentUser();
-        if (currentUser == null) {
-            showAlert("Lỗi", "Không tìm thấy thông tin người dùng! Vui lòng đăng nhập lại.");
-            return;
+        User currentUser = SessionManager.getInstance().getCurrentUser();
+        if (currentUser == null) return;
+
+        List<Topic> topics = topicDAO.getAllTopics(currentUser.getId());
+        masterData.setAll(topics);
+
+        filteredData = new FilteredList<>(masterData, p -> true);
+        topicListView.setItems(filteredData);
+
+        if (searchField != null) {
+            searchField.textProperty().addListener((obs, oldVal, newVal) -> {
+                filteredData.setPredicate(topic -> {
+                    if (newVal == null || newVal.isEmpty()) return true;
+                    return topic.getName().toLowerCase().contains(newVal.toLowerCase());
+                });
+            });
         }
 
-
-        if (backButton != null) {
-            backButton.setOnAction(event -> handleBack());
-        }
-
-
-        configureListView();
-
-
-        loadTopics();
-        setupSearchFilter();
-
+        topicListView.setCellFactory(param -> new ListCell<Topic>() {
+            @Override
+            protected void updateItem(Topic item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getName() + " (" + item.getFlashcardCount() + " từ)");
+                    setStyle("-fx-font-size: 16px; -fx-padding: 10;");
+                }
+            }
+        });
 
         topicListView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -63,81 +72,14 @@ public class ReviewTopicController {
                 }
             }
         });
+
+        // Gán nút Back
+        if (backButton != null) backButton.setOnAction(e -> handleBack());
     }
-
-    private void configureListView() {
-        topicListView.setCellFactory(param -> new ListCell<Topic>() {
-            @Override
-            protected void updateItem(Topic item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                    setStyle("-fx-background-color: white;");
-                } else {
-                    // Hiển thị: "Tên Topic (Số lượng từ)"
-                    setText(item.getName() + " (" + item.getFlashcardCount() + " từ)");
-
-                    // Style CSS trực tiếp cho từng dòng
-                    setStyle("-fx-padding: 10; -fx-font-size: 16px; -fx-cursor: hand; -fx-border-color: transparent transparent #eee transparent;");
-                }
-            }
-        });
-    }
-
-    private void loadTopics() {
-        List<Topic> topics = topicDAO.getAllTopics(currentUser.getId());
-        masterData.setAll(topics);
-    }
-
-    private void setupSearchFilter() {
-
-        filteredData = new FilteredList<>(masterData, p -> true);
-
-
-        topicListView.setItems(filteredData);
-
-
-        if (searchField != null) {
-            searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-                filterTopics(newValue);
-            });
-        }
-    }
-
-    private void filterTopics(String keyword) {
-        filteredData.setPredicate(topic -> {
-            // Nếu từ khóa rỗng -> Hiển thị tất cả
-            if (keyword == null || keyword.isEmpty()) {
-                return true;
-            }
-
-
-            String lowerCaseFilter = keyword.toLowerCase();
-            return topic.getName().toLowerCase().contains(lowerCaseFilter);
-        });
-    }
-
-    private void handleBack() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) topicListView.getScene().getWindow();
-            stage.setMaximized(false);
-            stage.setScene(new Scene(root, 1280, 720));
-            stage.setTitle("Flashcard Learning - Menu Chính");
-            stage.setMaximized(true);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Lỗi", "Không thể quay lại Menu chính.");
-        }
-    }
-
 
     private void openReviewCard(Topic topic) {
         if (topic.getFlashcardCount() == 0) {
-            showAlert("Thông báo", "Chủ đề '" + topic.getName() + "' chưa có từ vựng nào để ôn tập!");
+            showAlert("Chủ đề này chưa có từ vựng nào!");
             return;
         }
 
@@ -145,39 +87,36 @@ public class ReviewTopicController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ReviewCard.fxml"));
             Parent root = loader.load();
 
-
-
-            try {
-                // Giả định bạn sẽ đặt tên controller là ReviewCardController
-                // Uncomment dòng dưới nếu bạn đã tạo Controller đó
-                /* ReviewCardController controller = loader.getController();
-                if (controller != null) {
-                    controller.setTopic(topic);
-                }
-                */
-            } catch (Exception e) {
-                System.err.println("Cảnh báo: Không thể truyền data sang ReviewCardController (có thể do chưa tạo Controller).");
+            ReviewCardController controller = loader.getController();
+            if (controller != null) {
+                controller.setTopic(topic);
             }
 
-
             Stage stage = (Stage) topicListView.getScene().getWindow();
-            stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
-            stage.setTitle("Ôn tập: " + topic.getName());
             stage.setMaximized(true);
             stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Lỗi", "Không thể mở màn hình ôn tập: " + e.getMessage());
+            showAlert("Lỗi không thể mở màn hình ôn tập: " + e.getMessage());
         }
     }
 
-    private void showAlert(String title, String content) {
+    private void handleBack() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) topicListView.getScene().getWindow();
+            stage.setScene(new Scene(root, 1280, 720));
+            stage.setMaximized(true);
+            stage.show();
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    private void showAlert(String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
         alert.setContentText(content);
-        alert.showAndWait();
+        alert.show();
     }
 }
