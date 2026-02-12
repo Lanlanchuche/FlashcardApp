@@ -23,6 +23,7 @@ com\mycompany\flashcardapp\constant\SuccessMessage.class
 com\mycompany\flashcardapp\MyFlashcardApp.class
 com\mycompany\flashcardapp\controller\RegisterController.class
 com\mycompany\flashcardapp\controller\RandomTestController$QuestionType.class
+com\mycompany\flashcardapp\controller\StatisticsController.class
 com\mycompany\flashcardapp\controller\RandomTestController.class
 com\mycompany\flashcardapp\controller\TopicTestController$QuestionType.class
 com\mycompany\flashcardapp\App.class

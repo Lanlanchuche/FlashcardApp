@@ -7,33 +7,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class TestModeMenuController {
 
     @FXML
-    private Button buttonRandomTest;
+    private VBox topicTestBox;
 
     @FXML
-    private Button buttonTopicTest;
-
-    @FXML
-    private Label instructionLabel;
+    private VBox randomTestBox;
 
     private User currentUser;
 
     @FXML
     public void initialize() {
         currentUser = SessionManager.getInstance().getCurrentUser();
-        if (currentUser != null && instructionLabel != null) {
-            instructionLabel.setText(currentUser.getUsername() + " hãy chọn hình thức kiểm tra để bắt đầu :3");
-        }
     }
 
     @FXML
-    void handleRandomTest(ActionEvent event) {
+    void handleRandomTest(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/RandomTest.fxml"));
             Parent root = loader.load();
@@ -51,7 +45,7 @@ public class TestModeMenuController {
     }
 
     @FXML
-    void handleTopicTest(ActionEvent event) {
+    void handleTopicTest(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TopicTest.fxml"));
             Parent root = loader.load();
@@ -69,7 +63,7 @@ public class TestModeMenuController {
 
     @FXML
     void handleBack(ActionEvent event) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
             Parent root = loader.load();
 
@@ -78,11 +72,9 @@ public class TestModeMenuController {
             stage.setScene(new Scene(root, 1280, 720));
             stage.setMaximized(true);
             stage.show();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Khong the tro lai MainMenu"
-            );
+            System.out.println("Khong the tro lai MainMenu");
         }
 
     }

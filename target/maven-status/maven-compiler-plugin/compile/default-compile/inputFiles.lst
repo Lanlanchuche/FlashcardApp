@@ -17,6 +17,7 @@ E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\MainMenuCont
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\model\User.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\database\StreakDAO.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\RandomTestController.java
+E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\StatisticsController.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\model\Topic.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\controller\TopicTestController.java
 E:\FlashcardApp\src\main\java\com\mycompany\flashcardapp\model\Streak.java
