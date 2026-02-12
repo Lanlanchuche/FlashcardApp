@@ -46,6 +46,7 @@ public class MainMenuController {
     @FXML
     void handleLogout(ActionEvent event) {
         try {
+            SessionManager.getInstance().logout(); // Xóa session khi đăng xuất
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Welcome.fxml"));
             Parent root = loader.load();
 
@@ -63,86 +64,42 @@ public class MainMenuController {
 
     @FXML
     void openVocabularyManagement(MouseEvent event) {
-        User currentUser = SessionManager.getInstance().getCurrentUser();
-        System.out.println("=== MainMenuController.openVocabularyManagement() called ===");
-        System.out.println("DEBUG: currentUser = "
-                + (currentUser != null ? currentUser.getUsername() + " (ID: " + currentUser.getId() + ")" : "NULL"));
-
-        if (currentUser == null) {
-            System.err.println("ERROR: currentUser is NULL! Cannot open VocabularyManagement.");
-            return;
-        }
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/VocabularyManagement.fxml"));
-            Parent root = loader.load();
-
-            System.out.println("DEBUG: User already set in SessionManager: " + currentUser.getUsername());
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setMaximized(false);
-            stage.setScene(new Scene(root, 1280, 720));
-            stage.setTitle("Flashcard Learning - Quản lý từ vựng");
-            stage.setMaximized(true);
-            stage.show();
-        } catch (IOException e) {
-            System.err.println("ERROR: Failed to open VocabularyManagement screen");
-            e.printStackTrace();
-            System.err.println("Không thể mở màn hình Quản lý từ vựng");
-        }
+        navigate(event, "/view/VocabularyManagement.fxml", "Flashcard Learning - Quản lý từ vựng");
     }
 
+    // --- CHỈNH SỬA Ở ĐÂY ---
     @FXML
     void openStudyMode(MouseEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/StudyMode.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setMaximized(false);
-            stage.setScene(new Scene(root, 1280, 720));
-            stage.setTitle("Flashcard Learning - Học tập");
-            stage.setMaximized(true);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Không thể mở màn hình Học tập");
-        }
+        // Chuyển hướng sang màn hình Chọn Topic để ôn tập (ReviewByTopic)
+        navigate(event, "/view/ReviewByTopic.fxml", "Flashcard Learning - Chọn chủ đề ôn tập");
     }
+    // -----------------------
 
     @FXML
     void openTestMode(MouseEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TestModeMenu.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setMaximized(false);
-            stage.setScene(new Scene(root, 1280, 720));
-            stage.setTitle("Flashcard Learning - Kiểm tra");
-            stage.setMaximized(true);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Không thể mở màn hình Kiểm tra");
-        }
+        navigate(event, "/view/TestModeMenu.fxml", "Flashcard Learning - Kiểm tra");
     }
 
     @FXML
     void openStatistics(MouseEvent event) {
+        navigate(event, "/view/Statistics.fxml", "Flashcard Learning - Thống kê");
+    }
+
+    // Hàm hỗ trợ chuyển cảnh để code gọn hơn
+    private void navigate(MouseEvent event, String fxmlPath, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Statistics.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
-            stage.setTitle("Flashcard Learning - Thống kê");
+            stage.setTitle(title);
             stage.setMaximized(true);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Không thể mở màn hình Thống kê");
+            System.err.println("Không thể mở màn hình: " + fxmlPath);
         }
     }
 }

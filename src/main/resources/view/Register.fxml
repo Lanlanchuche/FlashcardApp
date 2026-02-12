@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-  <StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.flashcardapp.controller.RegisterController">
+<StackPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.flashcardapp.controller.RegisterController">
       <padding>
           <Insets bottom="30" left="60" right="60" top="30" />
       </padding>
@@ -88,7 +87,7 @@
                      <children>
       
                                       <!-- Register button -->
-                                <Button defaultButton="true" maxWidth="Infinity" onAction="#handleRegister" prefHeight="50" style="-fx-background-color: #8E62A6; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(240, 147, 251, 0.4), 10, 0, 0, 3);" text="Đăng ký" textFill="WHITE">
+                                <Button fx:id="registerButton" defaultButton="true" maxWidth="Infinity" onAction="#handleRegister" prefHeight="50" style="-fx-background-color: #8E62A6; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(240, 147, 251, 0.4), 10, 0, 0, 3);" text="Đăng ký" textFill="WHITE">
                            <font>
                               <Font name="Times New Roman Bold" size="20.0" />
                            </font>
