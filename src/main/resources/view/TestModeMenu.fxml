@@ -19,7 +19,7 @@
                         <Insets top="-125.0" />
                     </VBox.margin>
                     <children>
-                        <VBox alignment="CENTER" prefHeight="171.0" prefWidth="513.0" spacing="10">
+                        <VBox alignment="CENTER" prefHeight="174.0" prefWidth="523.0" spacing="10">
                             <children>
                                 <Label graphicTextGap="6.0" text="CHẾ ĐỘ KIỂM TRA" textFill="WHITE">
                                     <font>
@@ -42,7 +42,7 @@
                     <children>
                         <VBox fx:id="topicTestBox" alignment="CENTER" onMouseClicked="#handleTopicTest" prefHeight="120.0" prefWidth="420.0" spacing="10.0" style="-fx-background-color: #4A90E2; -fx-background-radius: 15; -fx-cursor: hand;">
                             <children>
-                                <Label style="-fx-font-size: 30;" text="📚" />
+                                <Label style="-fx-font-size: 30;" text="📚" textFill="#faf7f7" />
                                 <Label text="Kiểm Tra Theo Chủ Đề" textFill="WHITE">
                                     <font>
                                         <Font name="Times New Roman Bold" size="18.0" />
@@ -53,7 +53,7 @@
 
                         <VBox fx:id="randomTestBox" alignment="CENTER" onMouseClicked="#handleRandomTest" prefHeight="120.0" prefWidth="420.0" spacing="10.0" style="-fx-background-color: #2ECC71; -fx-background-radius: 15; -fx-cursor: hand;">
                             <children>
-                                <Label style="-fx-font-size: 30;" text="🎲" />
+                                <Label style="-fx-font-size: 30;" text="🎲" textFill="#fffbfb" />
                                 <Label text="Kiểm Tra Ngẫu Nhiên" textFill="WHITE">
                                     <font>
                                         <Font name="Times New Roman Bold" size="18.0" />
@@ -64,7 +64,7 @@
                     </children>
                 </VBox>
 
-                <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBack" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 12; -fx-cursor: hand;" text="← Quay lại">
+                <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBack" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 12; -fx-cursor: hand;" text="Quay lại">
                     <font>
                         <Font name="Times New Roman Bold" size="18.0" />
                     </font>
