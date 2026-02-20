@@ -37,7 +37,7 @@ public class DatabaseConnection {
         return instance;
     }
 
-    //
+    //ủa file flashcards.sqlite k có nhể
     public Connection getConnection() {
         try {
             //Kiểm tra nếu đóng keets nối thì kết nối lại =)))
