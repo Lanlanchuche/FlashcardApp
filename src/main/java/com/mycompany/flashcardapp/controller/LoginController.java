@@ -55,6 +55,7 @@ public class LoginController {
                 Parent root = loader.load();
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setMaximized(false);
                 stage.setScene(new Scene(root, 1280, 720));
                 stage.setTitle("Flashcard Learning - Menu Chính");
                 stage.setMaximized(true);
@@ -79,6 +80,7 @@ public class LoginController {
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
             stage.setTitle("Flashcard Learning - Quên mật khẩu");
             stage.setMaximized(true);
@@ -98,6 +100,7 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Register.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
             stage.setTitle("Flashcard Learning - Đăng ký");
             stage.setMaximized(true);

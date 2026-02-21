@@ -45,13 +45,11 @@ public class ReviewCardController {
     @FXML
     private Button learnedButton;
 
-
     private final FlashcardDAO flashcardDAO = new FlashcardDAO();
     private List<Flashcard> flashcardList;
     private int currentIndex = 0;
     private boolean isFrontShowing = true;
     private Topic currentTopic;
-
 
     public void setTopic(Topic topic) {
         this.currentTopic = topic;
@@ -107,18 +105,23 @@ public class ReviewCardController {
     }
 
     private void showCurrentCard() {
-        if (flashcardList == null || flashcardList.isEmpty()) return;
+        if (flashcardList == null || flashcardList.isEmpty())
+            return;
 
         Flashcard card = flashcardList.get(currentIndex);
 
-        if (vocabLabel != null) vocabLabel.setText(card.getVocabulary());
-        if (definitionLabel != null) definitionLabel.setText(card.getDefinition());
+        if (vocabLabel != null)
+            vocabLabel.setText(card.getVocabulary());
+        if (definitionLabel != null)
+            definitionLabel.setText(card.getDefinition());
 
         isFrontShowing = true;
         updateCardSideVisibility();
 
-        if (prevButton != null) prevButton.setDisable(currentIndex == 0);
-        if (nextButton != null) nextButton.setDisable(currentIndex == flashcardList.size() - 1);
+        if (prevButton != null)
+            prevButton.setDisable(currentIndex == 0);
+        if (nextButton != null)
+            nextButton.setDisable(currentIndex == flashcardList.size() - 1);
     }
 
     @FXML
@@ -155,7 +158,8 @@ public class ReviewCardController {
 
     @FXML
     private void handleMarkLearned(ActionEvent event) {
-        if (flashcardList.isEmpty()) return;
+        if (flashcardList.isEmpty())
+            return;
 
         Flashcard currentCard = flashcardList.get(currentIndex);
 
@@ -188,11 +192,14 @@ public class ReviewCardController {
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             if (stage != null) {
+                stage.setMaximized(false);
                 stage.setScene(new Scene(root, 1280, 720));
                 stage.setMaximized(true);
                 stage.show();
             }
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showAlert(String title, String content) {
