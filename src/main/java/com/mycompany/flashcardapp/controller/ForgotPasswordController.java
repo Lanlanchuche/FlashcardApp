@@ -47,8 +47,8 @@ public class ForgotPasswordController {
 
     // 2. Mật khẩu: Ít nhất 1 chữ hoa, 1 số, 1 ký tự đặc biệt
     // Giải thích:
-    // (?=.*[A-Z])       : Phải có ít nhất 1 chữ in hoa
-    // (?=.*[0-9])       : Phải có ít nhất 1 số
+    // (?=.*[A-Z]) : Phải có ít nhất 1 chữ in hoa
+    // (?=.*[0-9]) : Phải có ít nhất 1 số
     // (?=.*[^a-zA-Z0-9]): Phải có ít nhất 1 ký tự đặc biệt (không phải chữ hoặc số)
     private static final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).+$";
 
@@ -99,7 +99,8 @@ public class ForgotPasswordController {
         // 1. Lấy dữ liệu chuẩn (dù đang ẩn hay hiện)
         String email = emailField.getText().trim();
         String password = showPasswordCheckbox.isSelected() ? passwordTextField.getText() : passwordField.getText();
-        String confirm = showPasswordCheckbox.isSelected() ? confirmTextField.getText() : confirmPasswordField.getText();
+        String confirm = showPasswordCheckbox.isSelected() ? confirmTextField.getText()
+                : confirmPasswordField.getText();
 
         // 2. KIỂM TRA ĐẦU VÀO (VALIDATION)
 
@@ -145,6 +146,7 @@ public class ForgotPasswordController {
             // otpController.setEmail(email);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
             stage.setTitle("Flashcard Learning - Xác thực OTP");
             stage.setMaximized(true);
@@ -168,6 +170,7 @@ public class ForgotPasswordController {
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
             stage.setTitle("Flashcard Learning - Đăng nhập");
             stage.setMaximized(true);

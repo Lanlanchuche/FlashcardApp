@@ -1,8 +1,11 @@
 package com.mycompany.flashcardapp.controller;
 
 import com.mycompany.flashcardapp.database.FlashcardDAO;
+import com.mycompany.flashcardapp.database.StreakDAO;
+import com.mycompany.flashcardapp.database.TestResultDAO;
 import com.mycompany.flashcardapp.database.TopicDAO;
 import com.mycompany.flashcardapp.model.Flashcard;
+import com.mycompany.flashcardapp.model.TestResult;
 import com.mycompany.flashcardapp.model.Topic;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -66,6 +69,8 @@ public class TopicTestController {
 
     private FlashcardDAO flashcardDAO;
     private TopicDAO topicDAO;
+    private TestResultDAO testResultDAO;
+    private StreakDAO streakDAO;
     private List<QuestionData> testQuestions;
     private int currentQuestionIndex = 0;
     private int correctAnswers = 0;
@@ -96,6 +101,8 @@ public class TopicTestController {
     private void initialize() {
         flashcardDAO = new FlashcardDAO();
         topicDAO = new TopicDAO();
+        testResultDAO = new TestResultDAO();
+        streakDAO = new StreakDAO();
         loadTopics();
     }
 
@@ -124,8 +131,8 @@ public class TopicTestController {
 
         topicComboBox.getItems().addAll(topicsWithFlashcards);
         /*
-        * Đoạn này AI vibe code, chưa hiểu lắm :)))
-        * */
+         * Đoạn này AI vibe code, chưa hiểu lắm :)))
+         */
 
         topicComboBox.setCellFactory(param -> new javafx.scene.control.ListCell<Topic>() {
             @Override
@@ -437,6 +444,19 @@ public class TopicTestController {
             grade = "Cần học thêm";
             message = "Đừng nản chí, hãy tiếp tục luyện tập!";
         }
+
+        // Lưu kết quả kiểm tra vào database
+        int userId = SessionManager.getInstance().getCurrentUser().getId();
+        String topicName = selectedTopic != null ? selectedTopic.getName() : null;
+        TestResult result = new TestResult(userId, "TOPIC", topicName, correctAnswers, totalQuestions);
+        boolean saved = testResultDAO.saveResult(result);
+        if (saved) {
+            System.out.println("Đã lưu kết quả bài kiểm tra chủ đề: " + topicName);
+        } else {
+            System.err.println("Không thể lưu kết quả kiểm tra");
+        }
+
+        streakDAO.updateStreak(userId);
 
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Kết quả kiểm tra");

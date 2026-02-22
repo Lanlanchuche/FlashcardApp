@@ -60,7 +60,8 @@ public class RegisterController {
         }
 
         if (!email.contains("@") || !email.contains(".")) {
-            showAlert(Alert.AlertType.WARNING, "Email không hợp lệ", "Vui lòng nhập đúng định dạng email (vd: user@example.com)!");
+            showAlert(Alert.AlertType.WARNING, "Email không hợp lệ",
+                    "Vui lòng nhập đúng định dạng email (vd: user@example.com)!");
             return;
         }
 
@@ -98,7 +99,8 @@ public class RegisterController {
 
     /**
      * Chuyển hướng sang màn hình Đăng nhập (Login)
-     * Được gọi bởi Hyperlink "Hỗ trợ thêm thông tin" (mà thực tế là nút Back to Login trong logic cũ)
+     * Được gọi bởi Hyperlink "Hỗ trợ thêm thông tin" (mà thực tế là nút Back to
+     * Login trong logic cũ)
      */
     @FXML
     void goToLogin(ActionEvent event) {
@@ -117,7 +119,7 @@ public class RegisterController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             // Cấu hình Stage
-            stage.setMaximized(false); // Reset maximize để tránh lỗi layout
+            stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
             stage.setTitle("Flashcard Learning - Đăng nhập");
             stage.setMaximized(true);
@@ -130,7 +132,8 @@ public class RegisterController {
     }
 
     /**
-     * Hiển thị thông báo (Thay thế cho Label registerErrorLabel không có trong FXML)
+     * Hiển thị thông báo (Thay thế cho Label registerErrorLabel không có trong
+     * FXML)
      */
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);

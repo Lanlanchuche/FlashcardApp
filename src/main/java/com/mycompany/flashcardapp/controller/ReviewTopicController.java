@@ -34,7 +34,8 @@ public class ReviewTopicController {
     @FXML
     public void initialize() {
         User currentUser = SessionManager.getInstance().getCurrentUser();
-        if (currentUser == null) return;
+        if (currentUser == null)
+            return;
 
         List<Topic> topics = topicDAO.getAllTopics(currentUser.getId());
         masterData.setAll(topics);
@@ -45,7 +46,8 @@ public class ReviewTopicController {
         if (searchField != null) {
             searchField.textProperty().addListener((obs, oldVal, newVal) -> {
                 filteredData.setPredicate(topic -> {
-                    if (newVal == null || newVal.isEmpty()) return true;
+                    if (newVal == null || newVal.isEmpty())
+                        return true;
                     return topic.getName().toLowerCase().contains(newVal.toLowerCase());
                 });
             });
@@ -74,7 +76,8 @@ public class ReviewTopicController {
         });
 
         // Gán nút Back
-        if (backButton != null) backButton.setOnAction(e -> handleBack());
+        if (backButton != null)
+            backButton.setOnAction(e -> handleBack());
     }
 
     private void openReviewCard(Topic topic) {
@@ -93,6 +96,7 @@ public class ReviewTopicController {
             }
 
             Stage stage = (Stage) topicListView.getScene().getWindow();
+            stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
             stage.setMaximized(true);
             stage.show();
@@ -108,10 +112,13 @@ public class ReviewTopicController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) topicListView.getScene().getWindow();
+            stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
             stage.setMaximized(true);
             stage.show();
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showAlert(String content) {

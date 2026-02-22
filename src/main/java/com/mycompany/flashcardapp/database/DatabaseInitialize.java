@@ -21,7 +21,6 @@ public class DatabaseInitialize {
             stmt.execute(createUsersTable);
             System.out.println("Bảng 'users' đã sẵn sàng");
 
-
             System.out.println("Đang tạo bảng 'topics'...");
             String createTopicsTable = """
                         CREATE TABLE IF NOT EXISTS topics (
@@ -51,9 +50,9 @@ public class DatabaseInitialize {
             stmt.execute(createFlashcardsTable);
             System.out.println("Bảng 'flashcards' đã sẵn sàng");
 
-            System.out.println("Đang tạo bảng 'user_streaks'...");
+            System.out.println("Đang tạo bảng 'streaks'...");
             String createUserStreaksTable = """
-                        CREATE TABLE IF NOT EXISTS user_streaks (
+                        CREATE TABLE IF NOT EXISTS streaks (
                             user_id INTEGER PRIMARY KEY,
                             current_streak INTEGER DEFAULT 0,
                             longest_streak INTEGER DEFAULT 0,
@@ -63,14 +62,13 @@ public class DatabaseInitialize {
                         )
                     """;
             stmt.execute(createUserStreaksTable);
-            System.out.println("Bảng 'user_streaks' đã sẵn sàng");
+            System.out.println("Bảng 'streaks' đã sẵn sàng");
 
         } catch (SQLException e) {
-            System.err.println("❌ Lỗi khi khởi tạo database!");
+            System.err.println("Lỗi khi khởi tạo database!");
             e.printStackTrace();
         }
 
     }
-
 
 }

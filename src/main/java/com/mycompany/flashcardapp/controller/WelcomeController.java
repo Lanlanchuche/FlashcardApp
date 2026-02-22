@@ -10,19 +10,18 @@ import javafx.stage.Stage;
 public class WelcomeController {
     @FXML
     void openLogin(ActionEvent event) {
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
             Parent root = fxmlLoader.load();
 
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            stage.setMaximized(false); // Đặt về false trước
+            stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
             stage.setTitle("Flashcard Learning - Đăng nhập");
-            stage.setMaximized(true); // Sau đó maximize
+            stage.setMaximized(true);
             stage.show();
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Không thể mở màn hình đăng nhập");
         }
@@ -31,19 +30,18 @@ public class WelcomeController {
 
     @FXML
     void openRegister(ActionEvent event) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Register.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
+            stage.setMaximized(false);
+            stage.setScene(new Scene(root, 1280, 720));
             stage.setTitle("Flashcard Learning - Đăng ký");
-            stage.centerOnScreen();
-            stage.setFullScreen(true);
+            stage.setMaximized(true);
             stage.show();
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Không thể mở màn hình đăng kí");
         }
