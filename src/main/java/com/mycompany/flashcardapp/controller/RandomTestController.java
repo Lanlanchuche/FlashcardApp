@@ -1,7 +1,10 @@
 package com.mycompany.flashcardapp.controller;
 
 import com.mycompany.flashcardapp.database.FlashcardDAO;
+import com.mycompany.flashcardapp.database.StreakDAO;
+import com.mycompany.flashcardapp.database.TestResultDAO;
 import com.mycompany.flashcardapp.model.Flashcard;
+import com.mycompany.flashcardapp.model.TestResult;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,6 +59,8 @@ public class RandomTestController {
     private TextField unscrambleField;
 
     private FlashcardDAO flashcardDAO;
+    private TestResultDAO testResultDAO;
+    private StreakDAO streakDAO;
     private List<QuestionData> testQuestions;
     private int currentQuestionIndex = 0;
     private int correctAnswers = 0;
@@ -71,9 +76,9 @@ public class RandomTestController {
     public class QuestionData {
         Flashcard flashcard;
         QuestionType type;
-        List<String> options; //DIEN_TU
+        List<String> options; // DIEN_TU
         int correctOptionIndex;
-        String scrambleWord; //XAO_TU
+        String scrambleWord; // XAO_TU
 
         QuestionData(Flashcard flashcard, QuestionType type) {
             this.flashcard = flashcard;
@@ -84,6 +89,8 @@ public class RandomTestController {
     @FXML
     private void initialize() {
         flashcardDAO = new FlashcardDAO();
+        testResultDAO = new TestResultDAO();
+        streakDAO = new StreakDAO();
         loadTestFlashcards();
     }
 
@@ -91,43 +98,37 @@ public class RandomTestController {
         int userId = SessionManager.getInstance().getCurrentUser().getId();
         List<Flashcard> allFlashcards = flashcardDAO.getAllFlashcards(userId);
 
-        if(allFlashcards.isEmpty()) {
-            showAlert("Không có từ vựng!!!","Bạn chưa tạo từ vựng nào để kiểm tra!", AlertType.WARNING);
+        if (allFlashcards.isEmpty()) {
+            showAlert("Không có từ vựng!!!", "Bạn chưa tạo từ vựng nào để kiểm tra!", AlertType.WARNING);
             backToTestMenu();
             return;
-        }
-        else{
+        } else {
             Collections.shuffle(allFlashcards);
             int limit = Math.min(10, allFlashcards.size());
             testQuestions = new ArrayList<>();
 
-
             for (int i = 0; i < limit; i++) {
-                Flashcard flashcard = allFlashcards.get(i);//lay ra chi so
+                Flashcard flashcard = allFlashcards.get(i);// lay ra chi so
                 QuestionType type;
 
-                if(i < 4){
+                if (i < 4) {
                     type = QuestionType.TRAC_NGHIEM;
-                }
-                else if(i < 7){
+                } else if (i < 7) {
                     type = QuestionType.DIEN_TU;
-                }
-                else{
+                } else {
                     type = QuestionType.XAO_TU;
                 }
 
                 QuestionData questionData = new QuestionData(flashcard, type);
-                if(type == QuestionType.TRAC_NGHIEM){
+                if (type == QuestionType.TRAC_NGHIEM) {
                     prepareMultipleChoiceData(questionData, allFlashcards);
 
-                }
-                 else if (type == QuestionType.XAO_TU) {
+                } else if (type == QuestionType.XAO_TU) {
                     prepareWordScrambleData(questionData);
-                 }
+                }
 
-                 testQuestions.add(questionData);
+                testQuestions.add(questionData);
             }
-
 
         }
         totalQuestions = testQuestions.size();
@@ -138,11 +139,12 @@ public class RandomTestController {
         updateProgress();
 
     }
+
     private void prepareMultipleChoiceData(QuestionData question, List<Flashcard> allFlashcards) {
         question.options = new ArrayList<>();
         question.options.add(question.flashcard.getDefinition());
         List<Flashcard> otherCards = new ArrayList<>(allFlashcards);
-        otherCards.remove(question.flashcard);//bo dap an dung khoi danh sach dap an sai
+        otherCards.remove(question.flashcard);// bo dap an dung khoi danh sach dap an sai
         Collections.shuffle(otherCards);
 
         int wrongCount = 0;
@@ -369,6 +371,18 @@ public class RandomTestController {
             grade = "Cần học thêm";
             message = "Đừng nản chí, hãy tiếp tục luyện tập!";
         }
+
+        // Lưu kết quả kiểm tra vào database
+        int userId = SessionManager.getInstance().getCurrentUser().getId();
+        TestResult result = new TestResult(userId, "RANDOM", null, correctAnswers, totalQuestions);
+        boolean saved = testResultDAO.saveResult(result);
+        if (saved) {
+            System.out.println("✓ Đã lưu kết quả bài kiểm tra ngẫu nhiên");
+        } else {
+            System.err.println("⚠ Không thể lưu kết quả kiểm tra");
+        }
+
+        streakDAO.updateStreak(userId);
 
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Kết quả kiểm tra");

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -14,6 +15,25 @@ public class StreakDAO {
 
     public StreakDAO() {
         this.connection = DatabaseConnection.getInstance().getConnection();
+        ensureTableExists();
+    }
+
+    public void ensureTableExists() {
+        String sql = """
+                CREATE TABLE IF NOT EXISTS streaks (
+                    user_id INTEGER PRIMARY KEY,
+                    current_streak INTEGER DEFAULT 0,
+                    longest_streak INTEGER DEFAULT 0,
+                    last_completed_at TEXT,
+                    freeze_count INTEGER DEFAULT 0,
+                    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                )
+                """;
+        try (Statement stmt = connection.createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi tạo bảng streaks: " + e.getMessage());
+        }
     }
 
     public Streak getUserStreak(int userId) {
@@ -31,102 +51,95 @@ public class StreakDAO {
                         rs.getInt("freeze_count"));
             }
         } catch (SQLException e) {
-            System.err.println("Failed to get user streak!");
-            e.printStackTrace();
+            System.err.println("Lỗi khi lấy streak: " + e.getMessage());
         }
         return null;
     }
 
-
     public boolean createDefaultStreak(int userId) {
-        String sql = "INSERT INTO streaks (user_id, current_streak, longest_streak, last_completed_at, freeze_count) " +
-                "VALUES (?, 0, 0, NULL, 0)";
+        String sql = "INSERT OR IGNORE INTO streaks (user_id, current_streak, longest_streak, last_completed_at, freeze_count) "
+                +
+                "VALUES (?, 0, 0, NULL, 2)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, userId);
             pstmt.executeUpdate();
             System.out.println("✓ Created default streak for user " + userId);
             return true;
         } catch (SQLException e) {
-            System.err.println("Failed to create default streak!");
-            e.printStackTrace();
+            System.err.println("Lỗi khi tạo streak mặc định: " + e.getMessage());
             return false;
         }
     }
 
-
     public boolean updateStreak(int userId) {
+        // Đảm bảo có bản ghi streak cho user
         Streak streak = getUserStreak(userId);
         if (streak == null) {
-            System.err.println("Streak not found for user " + userId);
-            return false;
+            createDefaultStreak(userId);
+            streak = getUserStreak(userId);
+            if (streak == null) {
+                System.err.println("Không thể tạo streak cho user " + userId);
+                return false;
+            }
         }
 
         LocalDate today = LocalDate.now();
         LocalDate lastCompleted = null;
 
-        // Parse ngày học cuối cùng
         if (streak.getLastCompletedAt() != null && !streak.getLastCompletedAt().isEmpty()) {
             try {
                 lastCompleted = LocalDate.parse(streak.getLastCompletedAt());
             } catch (Exception e) {
-                System.err.println("Failed to parse last_completed_at: " + streak.getLastCompletedAt());
-                lastCompleted = null;
+                System.err.println("Lỗi parse last_completed_at: " + streak.getLastCompletedAt());
             }
         }
 
-        // LOGIC TÍNH STREAK THEO NGÀY
         boolean shouldUpdate = false;
 
         if (lastCompleted == null) {
-            // Trường hợp 1: LẦN ĐẦU TIÊN học
+            // Lần đầu tiên học
             streak.setCurrentStreak(1);
             shouldUpdate = true;
-            System.out.println("✓ First study session! Streak = 1");
+            System.out.println("✓ Lần đầu học! Streak = 1");
 
         } else if (lastCompleted.equals(today)) {
-            // Trường hợp 2: ĐÃ HỌC HÔM NAY RỒI
-            // Không tăng streak, không cần update database
-            System.out.println("ℹ Already studied today. Streak remains: " + streak.getCurrentStreak());
-            return true; // Return true vì không phải lỗi, chỉ là không update
+            // Đã học hôm nay rồi, không tăng
+            System.out.println("ℹ Đã học hôm nay. Streak giữ nguyên: " + streak.getCurrentStreak());
+            return true;
 
         } else {
-            // Trường hợp 3: CHƯA HỌC HÔM NAY
             long daysBetween = ChronoUnit.DAYS.between(lastCompleted, today);
 
             if (daysBetween == 1) {
-                // HỌC LIÊN TỤC (hôm qua mới học)
+                // Học liên tục
                 streak.setCurrentStreak(streak.getCurrentStreak() + 1);
-                System.out.println("✓ Consecutive day! Streak increased to: " + streak.getCurrentStreak());
-
+                System.out.println("✓ Ngày liên tiếp! Streak tăng lên: " + streak.getCurrentStreak());
+            } else if (daysBetween == 2 && streak.getFreezeCount() > 0) {
+                // Bỏ lỡ đúng 1 ngày nhưng còn freeze → tiêu 1 freeze, giữ streak
+                streak.setFreezeCount(streak.getFreezeCount() - 1);
+                streak.setCurrentStreak(streak.getCurrentStreak() + 1);
+                System.out.println("🧊 Dùng 1 freeze! Streak giữ nguyên: " + streak.getCurrentStreak()
+                        + " | Freeze còn lại: " + streak.getFreezeCount());
             } else {
-                // BỎ LỠ (cách quá 1 ngày) → RESET STREAK
-                System.out.println("⚠ Missed " + (daysBetween - 1) + " day(s). Streak reset to 1");
+                // Bỏ lỡ quá nhiều ngày hoặc hết freeze → reset
+                System.out.println("⚠ Bỏ lỡ " + (daysBetween - 1) + " ngày. Streak reset về 1");
                 streak.setCurrentStreak(1);
             }
             shouldUpdate = true;
         }
 
-        // Cập nhật longest_streak nếu cần
         if (shouldUpdate && streak.getCurrentStreak() > streak.getLongestStreak()) {
             streak.setLongestStreak(streak.getCurrentStreak());
-            System.out.println("🏆 New record! Longest streak: " + streak.getLongestStreak());
+            System.out.println("🏆 Kỷ lục mới! Streak dài nhất: " + streak.getLongestStreak());
         }
 
-        // Lưu ngày hôm nay
         if (shouldUpdate) {
             streak.setLastCompletedAt(today.toString());
         }
 
-        // Lưu vào database
         return saveStreak(streak);
     }
 
-    /**
-     * LƯU THÔNG TIN STREAK VÀO DATABASE
-     *
-     * @param streak Streak object cần lưu
-     * @return true nếu lưu thành công, false nếu thất bại
-     */
     private boolean saveStreak(Streak streak) {
         String sql = "UPDATE streaks SET current_streak = ?, longest_streak = ?, last_completed_at = ?, freeze_count = ? "
                 +
@@ -138,11 +151,10 @@ public class StreakDAO {
             pstmt.setInt(4, streak.getFreezeCount());
             pstmt.setInt(5, streak.getUserId());
             pstmt.executeUpdate();
-            System.out.println("✓ Streak saved to database");
+            System.out.println("✓ Streak đã được lưu");
             return true;
         } catch (SQLException e) {
-            System.err.println("Failed to save streak!");
-            e.printStackTrace();
+            System.err.println("Lỗi khi lưu streak: " + e.getMessage());
             return false;
         }
     }

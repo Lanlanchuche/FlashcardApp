@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -54,87 +55,118 @@ public class StatisticsUserController {
     @FXML
     public void initialize() {
         int userId = SessionManager.getInstance().getCurrentUser().getId();
+
+        Streak existingStreak = streakDAO.getUserStreak(userId);
+        if (existingStreak == null) {
+            streakDAO.createDefaultStreak(userId);
+        }
+
         loadStatistics(userId);
         loadStreak(userId);
         loadTestHistory(userId);
     }
 
     private void loadStatistics(int userId) {
-        List<Flashcard> allFlashcards = flashcardDAO.getAllFlashcards(userId);
-        int total = allFlashcards.size();
-        long learned = allFlashcards.stream().filter(Flashcard::isLearned).count();
+        try {
+            List<Flashcard> allFlashcards = flashcardDAO.getAllFlashcards(userId);
+            int total = allFlashcards.size();
+            long learned = allFlashcards.stream().filter(Flashcard::isLearned).count();
+            setText(lblTotalWords, String.valueOf(total));
+            setText(lblLearnedWords, String.valueOf(learned));
+        } catch (Exception e) {
+            setText(lblTotalWords, "0");
+            setText(lblLearnedWords, "0");
+        }
 
-        lblTotalWords.setText(String.valueOf(total));
-        lblLearnedWords.setText(String.valueOf(learned));
+        try {
+            List<Topic> topics = topicDAO.getAllTopics(userId);
+            setText(lblTotalTopics, String.valueOf(topics.size()));
+        } catch (Exception e) {
+            setText(lblTotalTopics, "0");
+        }
 
-        List<Topic> topics = topicDAO.getAllTopics(userId);
-        lblTotalTopics.setText(String.valueOf(topics.size()));
-
-        double avg = testResultDAO.getAverageScore(userId);
-        if (avg < 0) {
-            lblAvgScore.setText("--");
-        } else {
-            lblAvgScore.setText(String.format("%.0f%%", avg));
+        try {
+            double avg = testResultDAO.getAverageScore(userId);
+            setText(lblAvgScore, avg < 0 ? "--" : String.format("%.0f%%", avg));
+        } catch (Exception e) {
+            setText(lblAvgScore, "--");
         }
     }
 
     private void loadStreak(int userId) {
-        Streak streak = streakDAO.getUserStreak(userId);
-        if (streak != null) {
-            lblCurrentStreak.setText(String.valueOf(streak.getCurrentStreak()));
-            lblLongestStreak.setText(String.valueOf(streak.getLongestStreak()));
-            lblFreezeCount.setText(String.valueOf(streak.getFreezeCount()));
-        } else {
-            lblCurrentStreak.setText("0");
-            lblLongestStreak.setText("0");
-            lblFreezeCount.setText("0");
+        try {
+            Streak streak = streakDAO.getUserStreak(userId);
+            if (streak == null) {
+                setText(lblCurrentStreak, "0");
+                setText(lblLongestStreak, "0");
+                setText(lblFreezeCount, "0");
+                return;
+            }
+            setText(lblCurrentStreak, String.valueOf(streak.getCurrentStreak()));
+            setText(lblLongestStreak, String.valueOf(streak.getLongestStreak()));
+            setText(lblFreezeCount, String.valueOf(streak.getFreezeCount()));
+        } catch (Exception e) {
+            setText(lblCurrentStreak, "0");
+            setText(lblLongestStreak, "0");
+            setText(lblFreezeCount, "0");
         }
     }
 
     private void loadTestHistory(int userId) {
-        List<TestResult> results = testResultDAO.getResultsByUser(userId);
-
-        if (results.isEmpty()) {
-            if (lblNoResults != null)
-                lblNoResults.setVisible(true);
-            return;
-        }
-
-        if (lblNoResults != null)
-            lblNoResults.setVisible(false);
-
-        for (TestResult r : results) {
-            HBox row = buildResultRow(r);
-            testResultsContainer.getChildren().add(row);
+        try {
+            List<TestResult> results = testResultDAO.getResultsByUser(userId);
+            if (results.isEmpty()) {
+                setVisible(lblNoResults, true);
+                return;
+            }
+            setVisible(lblNoResults, false);
+            boolean isEven = false;
+            for (TestResult r : results) {
+                testResultsContainer.getChildren().add(buildResultRow(r, isEven));
+                isEven = !isEven;
+            }
+        } catch (Exception e) {
+            setVisible(lblNoResults, true);
         }
     }
 
-    private HBox buildResultRow(TestResult r) {
+    private HBox buildResultRow(TestResult r, boolean isEven) {
         HBox row = new HBox();
         row.setPadding(new Insets(7, 10, 7, 10));
-        row.setStyle("-fx-background-color: #F8F8F8; -fx-background-radius: 6;");
+        row.setStyle("-fx-background-color: " + (isEven ? "#F8F8F8" : "#FFFFFF") + "; -fx-background-radius: 6;");
 
         Label lblType = new Label(r.getDisplayName());
         lblType.setPrefWidth(155);
         lblType.setStyle("-fx-font-size: 12;");
+        lblType.setTextFill(Color.BLACK);
 
         Label lblScore = new Label(r.getScoreText());
         lblScore.setPrefWidth(85);
         lblScore.setStyle("-fx-font-size: 12; -fx-font-weight: bold;");
+        lblScore.setTextFill(Color.BLACK);
 
-        String pct = String.format("%.0f%%", r.getPercentage());
-        Label lblPct = new Label(pct);
+        double pct = r.getPercentage();
+        Label lblPct = new Label(String.format("%.0f%%", pct));
         lblPct.setPrefWidth(65);
-        String color = r.getPercentage() >= 80 ? "#2E7D32"
-                : r.getPercentage() >= 50 ? "#E65100"
-                        : "#C62828";
+        String color = pct >= 80 ? "#2E7D32" : pct >= 50 ? "#E65100" : "#C62828";
         lblPct.setStyle("-fx-font-size: 12; -fx-font-weight: bold; -fx-text-fill: " + color + ";");
 
         Label lblDate = new Label(r.getDateDisplay());
-        lblDate.setStyle("-fx-font-size: 11; -fx-text-fill: #757575;");
+        lblDate.setStyle("-fx-font-size: 11;");
+        lblDate.setTextFill(Color.BLACK);
 
         row.getChildren().addAll(lblType, lblScore, lblPct, lblDate);
         return row;
+    }
+
+    private void setText(Label label, String text) {
+        if (label != null)
+            label.setText(text);
+    }
+
+    private void setVisible(Label label, boolean visible) {
+        if (label != null)
+            label.setVisible(visible);
     }
 
     @FXML
@@ -150,7 +182,6 @@ public class StatisticsUserController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Không thể quay về MainMenu");
         }
     }
 }
