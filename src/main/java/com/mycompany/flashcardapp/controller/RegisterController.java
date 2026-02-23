@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -18,35 +19,80 @@ import java.io.IOException;
 
 public class RegisterController {
 
-    // --- KHAI BÁO CÁC THÀNH PHẦN KHỚP VỚI Register.fxml ---
+    @FXML
+    private TextField usernameField;
 
     @FXML
-    private TextField usernameField; // [cite: 1341]
+    private TextField emailField;
 
     @FXML
-    private TextField emailField; // [cite: 1346]
+    private PasswordField passwordField;
+    @FXML
+    private TextField passwordTextField; // Ô hiển thị chữ cho Mật khẩu
 
     @FXML
-    private PasswordField passwordField;// [cite: 1351]
+    private PasswordField confirmPasswordField;
+    @FXML
+    private TextField confirmTextField; // Ô hiển thị chữ cho Xác nhận mật khẩu
 
     @FXML
-    private PasswordField confirmPasswordField;// [cite: 1356]
+    private CheckBox showPasswordCheckbox;
 
     @FXML
-    private Button registerButton;// [cite: 1359]
+    private Button registerButton;
 
-    // --- XỬ LÝ DỮ LIỆU ---
     private final UserDAO userDAO = new UserDAO();
 
     /**
-     * Xử lý sự kiện khi nhấn nút "Đăng ký" hoặc nhấn Enter tại ô xác nhận mật khẩu
+     * Xử lý khi tick vào "Hiện mật khẩu"
+     */
+    @FXML
+    void handleShowPassword(ActionEvent event) {
+        if (showPasswordCheckbox.isSelected()) {
+            // Chế độ HIỆN: Lấy dữ liệu từ ô ẩn -> gán sang ô hiện
+            passwordTextField.setText(passwordField.getText());
+            confirmTextField.setText(confirmPasswordField.getText());
+
+            // Đảo trạng thái hiển thị
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+            passwordTextField.setVisible(true);
+            passwordTextField.setManaged(true);
+
+            confirmPasswordField.setVisible(false);
+            confirmPasswordField.setManaged(false);
+            confirmTextField.setVisible(true);
+            confirmTextField.setManaged(true);
+
+        } else {
+            // Chế độ ẨN: Lấy dữ liệu từ ô hiện -> gán sang ô ẩn
+            passwordField.setText(passwordTextField.getText());
+            confirmPasswordField.setText(confirmTextField.getText());
+
+            // Đảo trạng thái hiển thị
+            passwordField.setVisible(true);
+            passwordField.setManaged(true);
+            passwordTextField.setVisible(false);
+            passwordTextField.setManaged(false);
+
+            confirmPasswordField.setVisible(true);
+            confirmPasswordField.setManaged(true);
+            confirmTextField.setVisible(false);
+            confirmTextField.setManaged(false);
+        }
+    }
+
+    /**
+     * Xử lý sự kiện khi nhấn nút "Đăng ký"
      */
     @FXML
     private void handleRegister(ActionEvent event) {
         String username = usernameField.getText().trim();
         String email = emailField.getText().trim();
-        String password = passwordField.getText();
-        String confirmPassword = confirmPasswordField.getText();
+
+        // Lấy mật khẩu tùy theo việc đang bật hay tắt chế độ "Hiện mật khẩu"
+        String password = showPasswordCheckbox.isSelected() ? passwordTextField.getText() : passwordField.getText();
+        String confirmPassword = showPasswordCheckbox.isSelected() ? confirmTextField.getText() : confirmPasswordField.getText();
 
         // 1. Kiểm tra dữ liệu đầu vào
         if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
@@ -82,43 +128,28 @@ public class RegisterController {
         }
 
         // 3. Thực hiện đăng ký
-        // Lưu ý: Nếu UserDAO chưa hỗ trợ lưu email, bạn cần cập nhật UserDAO.
-        // Hiện tại hàm register chỉ nhận username/password.
         boolean success = userDAO.register(username, password);
 
         if (success) {
-            // Thông báo thành công và chuyển trang
             showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đăng ký tài khoản thành công!");
-
-            // Chuyển sang màn hình đăng nhập
             navigateToLogin(event);
         } else {
             showAlert(Alert.AlertType.ERROR, "Lỗi hệ thống", "Đăng ký thất bại! Vui lòng thử lại sau.");
         }
     }
 
-    /**
-     * Chuyển hướng sang màn hình Đăng nhập (Login)
-     * Được gọi bởi Hyperlink "Hỗ trợ thêm thông tin" (mà thực tế là nút Back to
-     * Login trong logic cũ)
-     */
     @FXML
     void goToLogin(ActionEvent event) {
         navigateToLogin(event);
     }
 
-    /**
-     * Hàm dùng chung để chuyển cảnh sang Login.fxml
-     */
     private void navigateToLogin(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
             Parent root = loader.load();
 
-            // Lấy Stage từ nguồn sự kiện (Nút hoặc Hyperlink)
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Cấu hình Stage
             stage.setMaximized(false);
             stage.setScene(new Scene(root, 1280, 720));
             stage.setTitle("Flashcard Learning - Đăng nhập");
@@ -131,10 +162,6 @@ public class RegisterController {
         }
     }
 
-    /**
-     * Hiển thị thông báo (Thay thế cho Label registerErrorLabel không có trong
-     * FXML)
-     */
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
