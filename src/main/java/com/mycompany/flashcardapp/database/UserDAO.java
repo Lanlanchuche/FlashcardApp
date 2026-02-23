@@ -13,7 +13,7 @@ public class UserDAO {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public UserDAO() {
-        
+
         this.connection = DatabaseConnection.getInstance().getConnection();
         ensureOtpColumns();
     }
