@@ -82,7 +82,7 @@ public class MainMenuController {
 
     @FXML
     void openStatistics(MouseEvent event) {
-        navigate(event, "/view/Statistics.fxml", "Flashcard Learning - Thống kê");
+        navigate(event, "/view/StatisticsUser.fxml", "Flashcard Learning - Thống kê");
     }
 
     // Hàm hỗ trợ chuyển cảnh để code gọn hơn
