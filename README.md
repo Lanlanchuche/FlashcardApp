@@ -184,11 +184,6 @@ mvn javafx:run
 - [x] Chế độ học Flashcard
 - [x] Chế độ kiểm tra (Topic & Random)
 - [x] Thống kê điểm số & Streak
-- [ ] Chức năng quên mật khẩu
-- [ ] Xuất/nhập từ vựng từ file CSV/Excel
-- [ ] Hỗ trợ hình ảnh và âm thanh trong flashcard
-- [ ] Giao diện Dark Mode
-
 ---
 
 ## 🤝 Đóng góp
@@ -218,7 +213,7 @@ Dự án này được phân phối theo giấy phép **MIT**. Xem chi tiết t�
 
 **Tạ Phương Anh**
 
-- 📧 Email: [lanlannguyen3306@gmail.com](mailto:lanlannguyen3306@gmail.com)
+- 📧 Email: [panh30954@gmail.com](mailto:panh30954@gmail.com)
 - 🐙 GitHub: 
 
 ---
@@ -229,3 +224,4 @@ Nếu dự án này hữu ích với bạn, hãy để lại một ⭐ để ủ
 
 
 </div>
+
