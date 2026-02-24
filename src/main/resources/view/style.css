@@ -1,6 +1,5 @@
 /* Nền chính với hiệu ứng Gradient tím xanh sặc sỡ */
 .root {
-    -fx-background-image: url("background/login.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover; /* Tự động co giãn ảnh vừa màn hình */
     -fx-background-position: center;

@@ -24,25 +24,22 @@ public class MyFlashcardApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         try {
-            // Initialize database connection
             DatabaseConnection.getInstance();
-
-            // Hiện màn hình đăng nhập
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Welcome.fxml"));
             Parent root = loader.load();
 
-            // Setup the scene
-            Scene scene = new Scene(root, 600, 400);
+            Scene scene = new Scene(root);
 
             // Configure the stage
-            stage.setTitle("Flashcard Learning - Đăng nhập");
+            stage.setTitle("Flashcard Learning - Welcome");
             stage.setScene(scene);
-            stage.setResizable(false);
+            stage.setMaximized(true);
+            stage.centerOnScreen();
             stage.show();
 
-            System.out.println("Application started successfully!");
+            System.out.println("Mở application thành công");
         } catch (Exception e) {
-            System.err.println("Failed to start application!");
+            System.err.println("Mở application thâ bại");
             e.printStackTrace();
         }
     }
