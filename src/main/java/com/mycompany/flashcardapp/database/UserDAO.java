@@ -11,11 +11,11 @@ public class UserDAO {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public UserDAO() {
+
         this.connection = DatabaseConnection.getInstance().getConnection();
         ensureOtpColumns();
     }
 
-    // Tự động thêm cột cho bảng users nếu chưa có
     private void ensureOtpColumns() {
         try {
             Statement stmt = connection.createStatement();
