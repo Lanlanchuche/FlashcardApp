@@ -28,7 +28,7 @@
                <children>
                         <Label fx:id="topicNameLabel" text="Đang tải..." textFill="#2c3e50">
                             <font>
-                                <Font name="Times New Roman Bold" size="30.0" />
+                                <Font name="Times New Roman Bold" size="50.0" />
                             </font>
                         </Label>
                </children>
@@ -39,7 +39,7 @@
                         <VBox fx:id="backCardSide" alignment="CENTER" spacing="10.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 15;" visible="false">
                             <children>
                                 <Label fx:id="definitionLabel" text="..." textAlignment="CENTER" textFill="#27ae60" wrapText="true">
-                                    <font> <Font name="Times New Roman Bold" size="32.0" /> </font>
+                                    <font> <Font name="Times New Roman Bold" size="60.0" /> </font>
                                 </Label>
                             </children>
                         </VBox>
@@ -47,7 +47,7 @@
                         <VBox fx:id="frontCardSide" alignment="CENTER" prefHeight="146.0" prefWidth="496.0" spacing="10.0" style="-fx-background-color: #fff; -fx-background-radius: 15; -fx-border-color: #bdc3c7; -fx-border-radius: 15; -fx-border-width: 1;">
                             <children>
                                 <Label fx:id="vocabLabel" text="..." textAlignment="CENTER" textFill="#2c3e50" wrapText="true">
-                                    <font> <Font name="Times New Roman Bold" size="48.0" /> </font>
+                                    <font> <Font name="Times New Roman Bold" size="60.0" /> </font>
                                 </Label>
                             </children>
                         </VBox>
@@ -63,7 +63,7 @@
                     </font>
                 </Button>
 
-                <HBox alignment="CENTER" spacing="100.0">
+                <HBox alignment="CENTER" spacing="60.0">
                     <children>
                         <Button fx:id="prevButton" mnemonicParsing="false" onAction="#handlePrevious" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #8E62A6; -fx-background-radius: 12; -fx-cursor: hand;" text="Từ trước" textFill="WHITE">
                             <font> <Font name="Times New Roman Bold" size="19.0" /> </font>
@@ -73,7 +73,7 @@
                             <font> <Font name="Times New Roman Bold" size="19.0" /> </font>
                         </Button>
 
-                        <Button fx:id="nextButton" mnemonicParsing="false" onAction="#handleNext" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #8E62A6; -fx-background-radius: 12; -fx-cursor: hand;" text="Tiếp theo " textFill="WHITE">
+                        <Button fx:id="nextButton" mnemonicParsing="false" onAction="#handleNext" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #8E62A6; -fx-background-radius: 12; -fx-cursor: hand;" text="Từ sau" textFill="WHITE">
                             <font> <Font name="Times New Roman Bold" size="19.0" /> </font>
                         </Button>
                     </children>

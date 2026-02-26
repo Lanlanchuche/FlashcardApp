@@ -41,7 +41,6 @@
                     <children>
                         <VBox fx:id="topicManagementBox" alignment="CENTER" onMouseClicked="#openVocabularyManagement" prefHeight="120.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: #4A90E2; -fx-background-radius: 15; -fx-cursor: hand;">
                             <children>
-                                <Label style="-fx-font-size: 30;" text="📚" />
                                 <Label text="Quản lý từ" textFill="WHITE">
                                     <font>
                                         <Font name="Times New Roman Bold" size="18.0" />
@@ -51,7 +50,6 @@
                         </VBox>
                         <VBox fx:id="reviewBox" alignment="CENTER" onMouseClicked="#openStudyMode" prefHeight="120.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: #2ECC71; -fx-background-radius: 15; -fx-cursor: hand;">
                             <children>
-                                <Label fx:id="reivew" style="-fx-font-size: 30;" text="📖" />
                                 <Label text="Ôn tập" textFill="WHITE">
                                     <font>
                                         <Font name="Times New Roman Bold" size="18.0" />
@@ -69,7 +67,6 @@
                     <children>
                         <VBox fx:id="TestBox" alignment="CENTER" onMouseClicked="#openTestMode" prefHeight="120.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: #F5A623; -fx-background-radius: 15; -fx-cursor: hand;">
                             <children>
-                                <Label style="-fx-font-size: 30;" text="✅" />
                                 <Label text="Kiểm tra" textFill="WHITE">
                                     <font>
                                         <Font name="Times New Roman Bold" size="18.0" />
@@ -79,7 +76,6 @@
                         </VBox>
                         <VBox fx:id="statisticsBox" alignment="CENTER" onMouseClicked="#openStatistics" prefHeight="120.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: #7B61FF; -fx-background-radius: 15; -fx-cursor: hand;">
                             <children>
-                                <Label style="-fx-font-size: 30;" text="📊" />
                                 <Label text="Thống kê" textFill="WHITE">
                                     <font>
                                         <Font name="Times New Roman Bold" size="18.0" />
