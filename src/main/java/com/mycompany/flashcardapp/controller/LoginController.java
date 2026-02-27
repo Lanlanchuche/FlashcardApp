@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -28,15 +29,29 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
-    // Đã thêm ID cho Hyperlink theo yêu cầu
+    // Thêm TextField để hiển thị mật khẩu dạng text thường
+    @FXML
+    private TextField passwordVisibleField;
+
+    // Thêm CheckBox để người dùng tick chọn hiện mật khẩu
+    @FXML
+    private CheckBox showPasswordCheckBox;
+
     @FXML
     private Hyperlink forgotPasswordLink;
 
     private final UserDAO userDAO = new UserDAO();
 
     @FXML
+    public void initialize() {
+        // Đồng bộ dữ liệu: Bất kỳ thay đổi nào ở passwordField cũng cập nhật sang passwordVisibleField và ngược lại
+        passwordVisibleField.textProperty().bindBidirectional(passwordField.textProperty());
+    }
+
+    @FXML
     private void handleLogin(ActionEvent event) {
         String username = usernameField.getText().trim();
+        // Lấy password (do đã bind nên lấy từ passwordField hay passwordVisibleField đều giống nhau)
         String password = passwordField.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
@@ -70,8 +85,27 @@ public class LoginController {
     }
 
     /**
+     * Chức năng: Xử lý ẩn/hiện mật khẩu
+     */
+    @FXML
+    void togglePasswordVisibility(ActionEvent event) {
+        if (showPasswordCheckBox.isSelected()) {
+            // Hiện TextField thường, ẩn PasswordField
+            passwordVisibleField.setVisible(true);
+            passwordVisibleField.setManaged(true);
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+        } else {
+            // Hiện PasswordField, ẩn TextField thường
+            passwordVisibleField.setVisible(false);
+            passwordVisibleField.setManaged(false);
+            passwordField.setVisible(true);
+            passwordField.setManaged(true);
+        }
+    }
+
+    /**
      * Chức năng: Chuyển sang màn hình Quên Mật Khẩu
-     * Đã liên kết với nút "Quên mật khẩu?" trong FXML
      */
     @FXML
     void handleForgotPassword(ActionEvent event) {
@@ -111,14 +145,12 @@ public class LoginController {
         }
     }
 
-    // Hàm hiển thị lỗi lên Label thay vì Alert (giữ nguyên style cũ của bạn)
     private void showError(String message) {
         if (loginErrorLabel != null) {
             loginErrorLabel.setText(message);
             loginErrorLabel.setStyle("-fx-text-fill: #e74c3c;");
             loginErrorLabel.setVisible(true);
         } else {
-            // Fallback dùng Alert nếu Label chưa load được
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(message);
             alert.show();
