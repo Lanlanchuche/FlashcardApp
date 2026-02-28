@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class RegisterController {
 
@@ -42,6 +43,9 @@ public class RegisterController {
     private Button registerButton;
 
     private final UserDAO userDAO = new UserDAO();
+
+    private static final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).+$";
+
 
     /**
      * Xử lý khi tick vào "Hiện mật khẩu"
@@ -124,6 +128,11 @@ public class RegisterController {
         // 2. Kiểm tra logic nghiệp vụ (Database)
         if (userDAO.isUsernameExists(username)) {
             showAlert(Alert.AlertType.ERROR, "Lỗi đăng ký", "Tên đăng nhập đã tồn tại! Vui lòng chọn tên khác.");
+            return;
+        }
+
+        if (!Pattern.matches(PASSWORD_PATTERN, password)) {
+            showAlert(Alert.AlertType.WARNING, "Mật khẩu yếu", "Mật khẩu phải bao gồm:\n- Ít nhất 1 chữ in hoa\n- Ít nhất 1 số\n- Ít nhất 1 ký tự đặc biệt (@, #, $, ...)");
             return;
         }
 
